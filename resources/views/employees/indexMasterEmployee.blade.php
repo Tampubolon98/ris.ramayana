@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Master Employee')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>Master Employee</h1>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    <p>Halaman utama untuk menampilkan ui master employee</p>
 @stop
 
 @section('css')
