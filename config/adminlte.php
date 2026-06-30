@@ -348,32 +348,60 @@ return [
                 // ],
                 [
                     'text' => 'Master Employee',
-                    'url' => '/master-employee',
+                    'url' => '#',
                     'submenu' => [
+                        // [
+                        //     'text' => 'Data Karyawan',
+                        //     'url' => '/master-employee.index',
+                        // ],
                         [
                             'text' => 'Data Karyawan',
-                            'url' => '/master-employee.index',
-                        ],
-                        [
-                            'text' => 'level_two',
                             'url' => '#',
+                            'icon' => 'fas fa-fw fa-users',
                             'submenu' => [
                                 [
-                                    'text' => 'level_three',
-                                    'url' => '#',
+                                    'text' => 'Data Karyawan',
+                                    'url' => '/master-employee.index',
+                                    'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 [
-                                    'text' => 'level_three',
+                                    'text' => 'Rehire Employee',
                                     'url' => '#',
+                                    'icon' => 'far fa-fw fa-star-half'
                                 ],
+                                [
+                                    'text' => 'Terminate Employee',
+                                    'url' => '#',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Report Employee',
+                                    'url' => '#',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Master Brand',
+                                    'url' => '#',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Report CV',
+                                    'url' => '#',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Mutasi Employee',
+                                    'url' => '#',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ]
                             ],
                         ],
                     ],
                 ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
+                // [
+                //     'text' => 'level_one',
+                //     'url' => '#',
+                // ],
             ],
         ],
         [
