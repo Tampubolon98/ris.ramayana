@@ -381,7 +381,7 @@ return [
                                 ],
                                 [
                                     'text' => 'Master Brand',
-                                    'url' => '#',
+                                    'url' => '/master-brand.index',
                                     'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 [
