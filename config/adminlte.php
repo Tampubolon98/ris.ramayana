@@ -376,7 +376,12 @@ return [
                                 ],
                                 [
                                     'text' => 'Report Employee',
-                                    'url' => '#',
+                                    'url' => '/report-spg.index',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Report CV',
+                                    'url' => '/report-cv.index',
                                     'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 [
@@ -385,13 +390,8 @@ return [
                                     'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 [
-                                    'text' => 'Report CV',
-                                    'url' => '#',
-                                    'icon' => 'far fa-fw fa-star-half'
-                                ],
-                                [
                                     'text' => 'Mutasi Employee',
-                                    'url' => '#',
+                                    'url' => '/mutasi-employee.index',
                                     'icon' => 'far fa-fw fa-star-half'
                                 ]
                             ],
@@ -408,38 +408,53 @@ return [
             'text' => 'Tax',
             'icon' => 'fas fa-fw fa-tachometer-alt',
             'submenu' => [
+                // [
+                //     'text' => 'Tax',
+                //     'url' => '#',
+                // ],
                 [
                     'text' => 'Tax',
                     'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
                     'submenu' => [
                         [
-                            'text' => 'level_two',
+                            'text' => 'Pajak Masukan',
                             'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
+                            'icon' => 'fas fa-fw fa-file-alt',
                             'submenu' => [
                                 [
-                                    'text' => 'level_three',
-                                    'url' => '#',
+                                    'text' => 'Bahan',
+                                    'url' => '',
+                                    'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 [
-                                    'text' => 'level_three',
+                                    'text' => 'Non A/P',
+                                    'url' => '',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ]
+                            ]
+                        ],
+                        [
+                            'text' => 'Pajak Keluaran',
+                            'url' => '#',
+                            'icon' => 'fas fa-fw fa-file-alt',
+                            'submenu' => [
+                                [
+                                    'text' => 'Input Pajak Keluaran',
                                     'url' => '#',
+                                    'icon' => 'far fa-fw fa-star-half'
                                 ],
+                                // [
+                                //     'text' => 'level_three',
+                                //     'url' => '#',
+                                // ],
                             ],
                         ],
                     ],
                 ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
+                // [
+                //     'text' => 'level_one',
+                //     'url' => '#',
+                // ],
             ],
         ],
         // [
