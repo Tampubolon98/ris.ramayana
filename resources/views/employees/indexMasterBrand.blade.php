@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 
 @section('title', 'Master Brand')
+@extends('icon')
 
 @section('content_header')
     <div class="container-fluid">

@@ -2,6 +2,8 @@
 
 @section('title', 'Dashboard')
 
+@extends('icon')
+
 @section('content_header')
     <h1>Dashboard</h1>
 @stop
