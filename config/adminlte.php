@@ -366,7 +366,7 @@ return [
                                 ],
                                 [
                                     'text' => 'Rehire Employee',
-                                    'url' => '#',
+                                    'url' => '/rehire-employee.index',
                                     'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 [
