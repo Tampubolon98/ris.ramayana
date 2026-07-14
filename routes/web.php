@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// ===== START EMPLOYEE =====
 // master employee
 Route::get('/master-employee.index', 'Employees\MasterEmployeeController@indexEmployee')->name('master-employee.index');
 
@@ -41,4 +42,10 @@ Route::get('/report-cv.index', 'Employees\MasterEmployeeController@indexReportCV
 
 // mutasi employee
 Route::get('/mutasi-employee.index', 'Employees\MasterEmployeeController@indexMutasi')->name('mutasi-employee.index');
+// ===== END EMPLOYEE =====
+
+// ===== START TAX =====
+// tax bahan
+Route::get('/tax-bahan.index', 'Tax\PajakMasukanController@indexTaxBahan')->name('tax-bahan.index');
+// ===== END TAX =====
 
