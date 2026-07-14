@@ -371,7 +371,7 @@ return [
                                 ],
                                 [
                                     'text' => 'Terminate Employee',
-                                    'url' => '#',
+                                    'url' => '/terminate-employee.index',
                                     'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 [
@@ -423,7 +423,7 @@ return [
                             'submenu' => [
                                 [
                                     'text' => 'Bahan',
-                                    'url' => '',
+                                    'url' => '/tax-bahan.index',
                                     'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 [
