@@ -11,6 +11,10 @@ class PajakMasukanController extends Controller {
     return view('tax.indexTaxBahan');
   }
 
+  public function indexTaxNonap() {
+    return view('tax.indexTaxNonap');
+  }
+
 }
 
 ?>
