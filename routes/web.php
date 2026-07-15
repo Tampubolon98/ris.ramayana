@@ -47,5 +47,8 @@ Route::get('/mutasi-employee.index', 'Employees\MasterEmployeeController@indexMu
 // ===== START TAX =====
 // tax bahan
 Route::get('/tax-bahan.index', 'Tax\PajakMasukanController@indexTaxBahan')->name('tax-bahan.index');
+
+// tax non a/p
+Route::get('/tax-nonap.index', 'Tax\PajakMasukanController@indexTaxNonap')->name('tax-nonap.index');
 // ===== END TAX =====
 
