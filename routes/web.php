@@ -50,5 +50,8 @@ Route::get('/tax-bahan.index', 'Tax\PajakMasukanController@indexTaxBahan')->name
 
 // tax non a/p
 Route::get('/tax-nonap.index', 'Tax\PajakMasukanController@indexTaxNonap')->name('tax-nonap.index');
+
+// tax out
+Route::get('/tax-out.index', 'Tax\PajakKeluaranController@indexTaxOut')->name('tax-out.index');
 // ===== END TAX =====
 
