@@ -440,7 +440,7 @@ return [
                             'submenu' => [
                                 [
                                     'text' => 'Input Pajak Keluaran',
-                                    'url' => '#',
+                                    'url' => '/tax-out.index',
                                     'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 // [
