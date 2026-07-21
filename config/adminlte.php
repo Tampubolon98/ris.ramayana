@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Ramayana',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,9 +63,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '<b>Ramayana</b>',
+    'logo_img' => 'images/logo_rmy.jpg',
+    'logo_img_class' => 'brand-image elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
@@ -320,78 +320,225 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
+        // [
+        //     'text' => 'pages',
+        //     'url' => 'admin/pages',
+        //     'icon' => 'far fa-fw fa-file',
+        //     'label' => 4,
+        //     'label_color' => 'success',
+        // ],
+        // ['header' => 'account_settings'],
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Dashboard',
+            'url' => '/home',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
         [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
+            'text' => 'General',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'Non Trade',
                     'submenu' => [
                         [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
+                            'text' => 'Access Trade',
+                            'icon' => 'fas fa-fw fa-user-lock',
                             'submenu' => [
                                 [
-                                    'text' => 'level_three',
-                                    'url' => '#',
+                                    'text' => 'Access TTD',
+                                    'icon' => 'far fa-fw fa-star-half',
+                                    'url' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'text' => 'Orders',
+                            'icon' => 'fas fa-fw fa-shopping-cart',
+                            'submenu' => [
+                                [
+                                    'text' => 'TTD Non Trade',
+                                    'icon' => 'far fa-fw fa-star-half',
+                                    'url' => '/nontrade.index'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        [
+            'text' => 'Human Resource',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
+            'submenu' => [
+                // [
+                //     'header' => 'Master Employee',
+                //     'can' => '/master-employee.index',
+                // ],
+                [
+                    'text' => 'Master Employee',
+                    'url' => '#',
+                    'submenu' => [
+                        // [
+                        //     'text' => 'Data Karyawan',
+                        //     'url' => '/master-employee.index',
+                        // ],
+                        [
+                            'text' => 'Data Karyawan',
+                            'url' => '#',
+                            'icon' => 'fas fa-fw fa-users',
+                            'submenu' => [
+                                [
+                                    'text' => 'Data Karyawan',
+                                    'url' => '/master-employee.index',
+                                    'icon' => 'far fa-fw fa-star-half'
                                 ],
                                 [
-                                    'text' => 'level_three',
-                                    'url' => '#',
+                                    'text' => 'Rehire Employee',
+                                    'url' => '/rehire-employee.index',
+                                    'icon' => 'far fa-fw fa-star-half'
                                 ],
+                                [
+                                    'text' => 'Terminate Employee',
+                                    'url' => '/terminate-employee.index',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Report Employee',
+                                    'url' => '/report-spg.index',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Report CV',
+                                    'url' => '/report-cv.index',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Master Brand',
+                                    'url' => '/master-brand.index',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Mutasi Employee',
+                                    'url' => '/mutasi-employee.index',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ]
                             ],
                         ],
                     ],
                 ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
+                // [
+                //     'text' => 'level_one',
+                //     'url' => '#',
+                // ],
             ],
         ],
-        ['header' => 'labels'],
         [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
+            'text' => 'Tax',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
+            'submenu' => [
+                // [
+                //     'text' => 'Tax',
+                //     'url' => '#',
+                // ],
+                [
+                    'text' => 'Tax',
+                    'url' => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'Pajak Masukan',
+                            'url' => '#',
+                            'icon' => 'fas fa-fw fa-file-alt',
+                            'submenu' => [
+                                [
+                                    'text' => 'Bahan',
+                                    'url' => '/tax-bahan.index',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                [
+                                    'text' => 'Non A/P',
+                                    'url' => '/tax-nonap.index',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ]
+                            ]
+                        ],
+                        [
+                            'text' => 'Pajak Keluaran',
+                            'url' => '#',
+                            'icon' => 'fas fa-fw fa-file-alt',
+                            'submenu' => [
+                                [
+                                    'text' => 'Input Pajak Keluaran',
+                                    'url' => '/tax-out.index',
+                                    'icon' => 'far fa-fw fa-star-half'
+                                ],
+                                // [
+                                //     'text' => 'level_three',
+                                //     'url' => '#',
+                                // ],
+                            ],
+                        ],
+                    ],
+                ],
+                // [
+                //     'text' => 'level_one',
+                //     'url' => '#',
+                // ],
+            ],
         ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+        // [
+        //     'text' => 'multilevel',
+        //     'icon' => 'fas fa-fw fa-share',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'level_one',
+        //             'url' => '#',
+        //         ],
+        //         [
+        //             'text' => 'level_one',
+        //             'url' => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text' => 'level_two',
+        //                     'url' => '#',
+        //                 ],
+        //                 [
+        //                     'text' => 'level_two',
+        //                     'url' => '#',
+        //                     'submenu' => [
+        //                         [
+        //                             'text' => 'level_three',
+        //                             'url' => '#',
+        //                         ],
+        //                         [
+        //                             'text' => 'level_three',
+        //                             'url' => '#',
+        //                         ],
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //         [
+        //             'text' => 'level_one',
+        //             'url' => '#',
+        //         ],
+        //     ],
+        // ],
+        // ['header' => 'labels'],
+        // [
+        //     'text' => 'important',
+        //     'icon_color' => 'red',
+        //     'url' => '#',
+        // ],
+        // [
+        //     'text' => 'warning',
+        //     'icon_color' => 'yellow',
+        //     'url' => '#',
+        // ],
+        // [
+        //     'text' => 'information',
+        //     'icon_color' => 'cyan',
+        //     'url' => '#',
+        // ],
     ],
 
     /*
