@@ -333,11 +333,39 @@ return [
             'url' => '/home',
             'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
-        // [
-        //     'text' => 'change_password',
-        //     'url' => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
+        [
+            'text' => 'General',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
+            'submenu' => [
+                [
+                    'text' => 'Non Trade',
+                    'submenu' => [
+                        [
+                            'text' => 'Access Trade',
+                            'icon' => 'fas fa-fw fa-user-lock',
+                            'submenu' => [
+                                [
+                                    'text' => 'Access TTD',
+                                    'icon' => 'far fa-fw fa-star-half',
+                                    'url' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'text' => 'Orders',
+                            'icon' => 'fas fa-fw fa-shopping-cart',
+                            'submenu' => [
+                                [
+                                    'text' => 'TTD Non Trade',
+                                    'icon' => 'far fa-fw fa-star-half',
+                                    'url' => '/nontrade.index'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ],
         [
             'text' => 'Human Resource',
             'icon' => 'fas fa-fw fa-tachometer-alt',

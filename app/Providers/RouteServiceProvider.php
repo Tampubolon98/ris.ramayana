@@ -46,6 +46,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->map_nontrade();
+
         //
     }
 
@@ -62,6 +64,12 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
     }
+
+    protected function map_nontrade() {
+        Route::middleware('web')
+              ->namespace($this->namespace)
+              ->group(base_path('routes/nontrade.php'));
+      }
 
     /**
      * Define the "api" routes for the application.
