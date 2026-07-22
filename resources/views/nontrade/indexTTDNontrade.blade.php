@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'TTD Nontrade')
+@section('title', 'Non Trade')
 @extends('icon')
 
 @section('content_header')
