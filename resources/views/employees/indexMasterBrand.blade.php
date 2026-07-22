@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Master Brand')
+@section('title', 'Master Employee')
 @extends('icon')
 
 @section('content_header')
@@ -47,6 +47,46 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal Add --}}
+    <div class="modal fade" id="modal-add" data-mode="add" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title">Tambah Master Brand</h3>
+                </div>
+                <form action="" id="modal-form" method="post" enctype="multipart/form-data" class="form-horizontal">
+                @csrf
+                <div class="modal-body">
+                    <div class="card-body">
+                        <input type="hidden" id="edit-faktur" name="edit-faktur">
+
+                        <div class="form-group">
+                            <label for="" data-required="true">MD Code</label>
+                            <input type="text" class="form-control form-control-sm" id="new-md" name="new-md">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" data-required="true">Brand</label>
+                            <input type="text" class="form-control form-control-sm" id="new-brand" name="new-brand">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" data-required="true">Supplier Name</label>
+                            <input type="text" class="form-control form-control-sm" id="new-supplier" name="new-supplier">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="reset" class="btn-sm btn-danger" data-dismiss="modal" onclick=""><i class="fa fa-times"></i>&nbsp; Batal</button>
+                    <button type="button" class="btn-sm btn-primary" onclick="" id="submit-add"><i class="fas fa-save"></i>&nbsp; Simpan</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- END --}}
 @stop
 
 @section('content')
