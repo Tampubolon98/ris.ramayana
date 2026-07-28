@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Master Employee')
+@section('title', 'Transaksi Member')
 @extends('icon')
 
 @section('content_header')
@@ -10,39 +10,41 @@
                 <div class="card card-red card-tabs">
                     <div class="card-header p-0 pt-2 pb-2">
                         <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                            <li class="card-title" style="color: white">&nbsp; Master Data Karyawan</li>
+                            <li class="card-title" style="color: white">&nbsp; List Transaksi Member Milkyverse</li>
                         </ul>
                     </div>
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-12" style="display: flex; justify-content: space-between;">
-                                <div class="row ml-1">
-                                    <div class="form-group">
-                                        <a href="javascript:void(0)" class="btn btn-m btn-success mr-3" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus"></i>&nbsp; Tambah Data</a>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                  <label for="" class="required">Periode Start - End</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                     </div>
-                                    <div class="form-group">
-                                        <a href="javascript:void(0)" class="btn btn-m btn-info" data-toggle="modal" data-target="#modal-upload"><i class="fas fa-upload"></i>&nbsp; Upload</a>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group">
-                                        <select name="storeCode" id="storeCode" class="form-control form-control-sm select2" style="width:20rem;" required="" autocomplete="off"></select>
-                                    </div>
-                                    <div class="form-group ml-2">
-                                        <select name="categoryEmployee" id="categoryEmployee" class="form-control form-control-sm select2" style="width: 20rem;" required="" autocomplete="off">
-                                            <option value="">Select at item</option>
-                                            <option value="ALL">ALL</option>
-                                            <option value="PKL">PKL</option>
-                                            <option value="SPG">SPG</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group mr-2">
-                                        <button class="btn btn-danger btn-flat btn-sm" onclick="">SEARCH</button>
-                                    </div>
+                                    <input type="text" class="form-control form-control-sm float-right" id="date_range_member" name="dtbRange">
+                                  </div>
                                 </div>
                             </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                  <label for="" class="required">STATUS</label>
+                                  <select name="status" id="status" class="form-control form-control-sm">
+                                    <option value="MATCH">MATCH</option>
+                                    <option value="UNMATCH">UNMATCH</option>
+                                    <option value="WAITING PAID">WAITING PAID</option>
+                                    <option value="">ALL STATUS</option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <div class="form-group">
+                              <button class="btn btn-sm btn-primary" id="btnSearch"><i class="fa fa-search"></i>&nbsp; Search</button>
+                            </div>
+                          </div>
                         </div>
 
                         <div class="row" id="div_table">
@@ -50,14 +52,17 @@
                                 <div style="overflow-x: auto;">
                                     <table class="table table-sm table-condensed table-bordered" style="font-size: 90%" id="list_table">
                                         <thead>
-                                            <tr>
-                                                <th class="text-center" style="background-color:#dc3545; color: white;">ID Karyawan</th>
-                                                <th class="text-center" style="background-color:#dc3545; color: white;">Nama Karyawan</th>
-                                                <th class="text-center" style="background-color:#dc3545; color: white;">Tanggal Masuk</th>
-                                                <th class="text-center" style="background-color:#dc3545; color: white;">Kode Toko</th>
-                                                <th class="text-center" style="background-color:#dc3545; color: white;">Supplier</th>
-                                                <th class="text-center" style="background-color:#dc3545; color: white;">Action</th>
-                                            </tr>
+                                          <tr>
+                                            <th class='text-center' style="background-color:#dc3545;color:white">Tanggal Struk</th>
+                                            <th class='text-center' style="background-color:#dc3545;color:white">PO No</th>
+                                            <th class='text-center' style="background-color:#dc3545;color:white">Invoice No</th>
+                                            <th class='text-center' style="background-color:#dc3545;color:white">Receiving No</th>
+                                            <th class='text-center' style="background-color:#dc3545;color:white">Tanggal Receiving</th>
+                                            <th class='text-right' style="background-color:#dc3545;color:white">Amount Receiving</th>
+                                            <th class='text-right' style="background-color:#dc3545;color:white">Amount Struk</th>
+                                            <th class='text-right' style="background-color:#dc3545;color:white">Petty Cash</th>
+                                            <th class='text-center' style="background-color:#dc3545;color:white">STATUS</th>
+                                          </tr>
                                         </thead>
                                         <tfoot align="right"></tfoot>
                                     </table>

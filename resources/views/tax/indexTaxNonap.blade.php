@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Master Employee')
+@section('title', 'Tax')
 @extends('icon')
 
 @section('content_header')
@@ -65,7 +65,7 @@
                                   <div class="table-responsive">
                                     <div class="row-d-flex justify-content-end">
                                       <div class="col-auto mb-2">
-                                        <button type="button" class="btn btn-sm btn-success" onclick=""><i class="fa fa-plus"></i>&nbsp; Input Data</button>
+                                        <button type="button" class="btn btn-sm btn-success" onclick="openModal('add')"><i class="fa fa-plus"></i>&nbsp; Input Data</button>
                                       </div>
                                     </div>
 
@@ -99,6 +99,112 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal Add --}}
+    <div class="modal fade" id="modal-add" data-mode="add" data-backdrop="static">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Tambah Data Tax Non A/P</h3>
+          </div>
+
+          <form action="" id="modal-form" method="post" enctype="multipart/form-data" class="form-horizontal">
+            @csrf
+            <div class="modal-body">
+              <div class="card-body">
+                <input type="hidden" id="edit-faktur" name="edit-faktur">
+
+                <div class="form-group">
+                  <label for="" class="required" data-required="true">Supplier</label>
+                  <select name="new-supplier" id="new-supplier" class="form-control form-control-sm select2" style="width: 100%;" autocomplete="off"></select>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">Masa Pajak</label>
+                    <div class="input-group input-group-sm date">
+                      <input type="text" class="form-control flatpickr-input" id="new-masa" name="new-masa">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text" id="pajakdate"><i class="fa fa-calendar"></i></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">NPWP</label>
+                    <input type="text" class="form-control form-control-sm" id="new-npwp" name="new-npwp" maxlength="16">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">Tanggal Penerimaan</label>
+                    <div class="input-group input-group-sm date">
+                      <input type="text" class="form-control flatpickr-input" id="new-penerimaan" name="new-penerimaan">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text" id="datepenerimaan"><i class="fa fa-calendar"></i></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">Faktur</label>
+                    <input type="text" class="form-control form-control-sm" id="new-faktur" name="new-faktur" maxlength="14">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">Tax Date</label>
+                    <div class="input-group input-group-sm date">
+                      <input type="text" class="form-control flatpickr-input" id="new-taxdate" name="new-taxdate">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text" id="taxdate"><i class="fa fa-calendar"></i></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">Tax Series</label>
+                    <input type="text" class="form-control" id="new-taxseries" name="new-taxseries" maxlength="20" oninput="">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">DPP</label>
+                    <input type="text" class="form-control" id="new-dpp" name="new-dpp" maxlength="18">
+                  </div>
+
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">DPP Nilai Lain</label>
+                    <input type="text" class="form-control" id="new-dppcomputed" name="new-dppcomputed" maxlength="18">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">PPN</label>
+                    <input type="text" class="form-control" id="new-ppn" name="new-ppn" maxlength="18">
+                  </div>
+
+                  <div class="col-sm-6 form-group">
+                    <label for="" data-required="true" class="required">Release</label>
+                    <input type="checkbox" class="form-control form-control-sm col-sm-1" id="new-release" name="new-release">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary" data-dismiss="modal" onclick=""><i class="fa fa-times"></i>&nbsp; Batal</button>
+              <button type="button" class="btn btn-primary" onclick="" id="save-button"><i class="fas fa-save"></i>&nbsp; Simpan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {{-- END --}}
 @stop
 
 @section('content')
@@ -115,5 +221,23 @@
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+    <script>
+      function openModal(mode, row=null){
+        if (mode == 'add'){
+          $('#modal-add').attr('data-mode', 'add');
+          $('#modal-title').text('Tambah Data Tax Non A/P');
+          $('.form-group').show();
+        }
+
+        if (mode == 'edit' && row){
+          $('#modal-add').attr('data-mode', 'edit');
+          $('#modal-title').text('Edit Data Tax Non A/P')
+          $('#modal-add').find('.required').removeClass('required');
+          $('#new-supplier').closest('.form-group').hide()
+          $('#new-masa').closest('.form-group').hide()
+          $('#new-npwp').closest('.form-group').hide()
+        }
+        $('#modal-add').modal('show')
+      }
+    </script>
 @stop

@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Employees;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Services\Employees\MasterEmployeeService;
 
 class MasterEmployeeController extends Controller {
+  private $masterEmployeeService;
 
+  public function __construct(MasterEmployeeService $masterEmployeeService)
+  {
+    $this->masterEmployeeService = $masterEmployeeService
+  }
   public function indexEmployee() {
     return view('employees.indexMasterEmployee');
   }
@@ -25,6 +31,16 @@ class MasterEmployeeController extends Controller {
 
   public function indexBrand() {
     return view('employees.indexMasterBrand');
+  }
+
+  public function tambahDataBrand(Request $params){
+    $result = $this->masterEmployeeService->tambahDataBrand($params);
+    return $result;
+  }
+
+  public function getDataBrand(){
+    $result = $this->masterEmployeeService->getDataBrand();
+    return $result;
   }
 
   public function indexReportCV() {

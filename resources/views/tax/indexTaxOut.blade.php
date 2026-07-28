@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Master Employee')
+@section('title', 'Tax')
 @extends('icon')
 
 @section('content_header')
