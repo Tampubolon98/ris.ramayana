@@ -48,6 +48,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->map_nontrade();
 
+        $this->map_idcash();
+
         //
     }
 
@@ -67,9 +69,15 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function map_nontrade() {
         Route::middleware('web')
-              ->namespace($this->namespace)
-              ->group(base_path('routes/nontrade.php'));
-      }
+            ->namespace($this->namespace)
+            ->group(base_path('routes/nontrade.php'));
+    }
+
+    protected function map_idcash() {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/idcash.php'));
+    }
 
     /**
      * Define the "api" routes for the application.
