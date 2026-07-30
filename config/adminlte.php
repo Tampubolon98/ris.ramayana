@@ -334,6 +334,23 @@ return [
             'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
         [
+            'text' => 'Acc',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
+            'submenu' => [
+                [
+                    'text' => 'Member Perusahaan',
+                    'icon' => 'far fa-fw fas fa-users',
+                    'submenu' => [
+                        [
+                            'text' => 'Transaksi Member',
+                            'icon' => 'far fa-fw fa-star-half',
+                            'url' => '/transaksi-member.index'
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        [
             'text' => 'General',
             'icon' => 'fas fa-fw fa-tachometer-alt',
             'submenu' => [
