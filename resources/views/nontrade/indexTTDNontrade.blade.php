@@ -1,7 +1,6 @@
-@extends('adminlte::page')
+@extends('layouts.master')
 
 @section('title', 'Non Trade')
-@extends('icon')
 
 @section('content_header')
 <div class="container-fluid">
@@ -52,16 +51,6 @@
 
 
 @section('content')
-@stop
-
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-    <style>
-        .nav-tabs {
-            border-bottom: none !important;
-        }
-    </style>
 @stop
 
 @section('js')

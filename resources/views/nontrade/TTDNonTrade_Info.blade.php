@@ -1,7 +1,6 @@
-@extends('adminlte::page')
+@extends('layouts.master')
 
 @section('title', 'Master Employee')
-@extends('icon')
 
 @section('content_header')
 <div class="modal inmodal bd-example-modal-lg" id="modalViewInfo" tabindex="-1" role="dialog" aria-hidden="true">
@@ -49,16 +48,6 @@
 @stop
 
 @section('content')
-@stop
-
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-    <style>
-        .nav-tabs {
-            border-bottom: none !important;
-        }
-    </style>
 @stop
 
 @section('js')

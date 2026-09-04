@@ -1,7 +1,6 @@
-@extends('adminlte::page')
+@extends('layouts.master')
 
 @section('title', 'Rehire Employee')
-@extends('icon')
 
 @section('content_header')
   <div class="container-fluid">
@@ -157,14 +156,6 @@
 @stop
 
 @section('content')
-@stop
-
-@section('css')
-  <style>
-    .nav-tabs {
-      border-bottom: none !important;
-    }
-  </style>
 @stop
 
 @section('js')
