@@ -426,7 +426,7 @@ class MasterEmployeeService{
     try {
       $fieldMaps = [
         'Sheet1' => [
-          'Name' => 'nama',
+          'Nama' => 'nama',
           'Tanggal Lahir' => 'tanggal_lahir', 
           'Alamat' => 'alamat', 
           'Kode Toko' => 'kode_toko', 
@@ -444,8 +444,6 @@ class MasterEmployeeService{
       ];
 
       $data = $this->excelToArrayWithMapping($request->file('file_excel')->getRealPath(), $fieldMaps);
-
-      dd($request, $fieldMaps, $data);
 
       $successCount = 0;
       $errorMessages = [];
@@ -534,7 +532,7 @@ class MasterEmployeeService{
             
                                 $row['id_employee'] = $id_employee;
                                 $row['status_aktif'] = '0';
-                                $row['user_create'] = Auth::user()->username;
+                                $row['user_create'] = Auth::user()->username ?? 'SYSTEM';
                                 $row['date_create'] = now();
                                 
                                 $this->masterEmployeeRepository->uploadData($row);
@@ -593,7 +591,6 @@ class MasterEmployeeService{
       ], 500);
     }
   }
-
   public function getSupplierEmp($params){
     $params['limit'] = 50;
     return $this->masterEmployeeRepository->getSupplierEmp($params);

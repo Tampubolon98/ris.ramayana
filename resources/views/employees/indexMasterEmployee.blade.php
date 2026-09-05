@@ -205,7 +205,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form id="form-upload" enctype="multipart/form-data" class="form-horizontal">
+                    <form id="form_upload" enctype="multipart/form-data" class="form-horizontal">
                         {{ csrf_field() }}
                         @if (Session::has('extension'))
                             <div class="alert alert-danger alert-dismissible" role="alert">This file not XLSX (Excel)!</div>
@@ -214,7 +214,8 @@
                             <div class="row">
                                 <label for="" class="col-sm-4 control-label">Choose File Excel</label>
                                 <div class="col">
-                                    <input type="file" class="form-control" name="file-excel" id="file-upload-excel">
+                                    <input type="file" class="form-control" name="file_excel" id="file
+                                    UploadExcel">
                                     <small class="form-text text-muted">Format File XLSX, XLS.</small>
                                 </div>
                             </div>
