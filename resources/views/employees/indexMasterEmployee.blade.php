@@ -241,6 +241,234 @@
         </div>
     </div>
     {{-- END --}}
+
+    {{-- Modal Detail --}}
+    <div class="modal inmodal bd-example-modal-lg" id="modal-detail" data-mode="detail" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated bounceInRight" style="max-height: calc(100vh - 100px); overflow-y: auto;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modal-title">Detail Data Karyawan</h3>
+                        <button type="button" id="close_modal" class="close float-right" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Nama</label>
+                                <input type="text" id="new-name" class="form-control form-control-sm" disabled />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Tanggal Lahir</label>
+                                <div class="input-group input-group-sm date">
+                                    <input type="text" class="form-control flatpickr-input" id="new-birthday" name="new-birthday" disabled>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text" id="birthDay"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Alamat</label>
+                            <textarea id="new-address" name="new-address" class="form-control form-control-sm" disabled></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Kode Toko</label>
+                                <select id="new-store" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off" disabled></select>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Perusahaan</label>
+                                <select id="new-office" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off" disabled></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>No Handphone</label>
+                                <input type="text" class="form-control form-control-sm" id="new-phone" name="new-phone" disabled>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Tanggal Masuk</label>
+                                <div class="input-group input-group-sm date">
+                                    <input type="text" class="form-control flatpickr-input" id="new-join" name="new-join" disabled>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text" id="joinDate"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label class="required" data-required="true">Nomor Kartu Keluarga</label>
+                                <input type="text" class="form-control" id="new-kk" name="new-kk" maxlength="18" disabled>
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                                <label class="required" data-required="true">Nomor KTP</label>
+                                <input type="text" class="form-control" id="new-ktp" name="new-ktp" maxlength="18" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label class="required" data-required="true">Jenis Kelamin</label>
+                                <select id="new-gender" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off" disabled>
+                                    <option value="">Select at item</option>
+                                    <option value="L">Laki-Laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label class="required" data-required="true">Status</label>
+                                <select id="new-status" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off" disabled>
+                                    <option value="">Select at item</option>
+                                    <option value="1">Belum Menikah</option>
+                                    <option value="2">Menikah</option>
+                                    <option value="3">Duda</option>
+                                    <option value="4">Janda</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table id="table_details_info" class="table table-striped table-sm table-condensed table-bordered">
+                            <thead>
+                            <tr>
+                                <th class='text-center'>Perusahaan</th>
+                                <th class='text-center'>ID Karyawan</th>
+                                <th class='text-center'>Kode Toko</th>
+                                <th class='text-center'>Brand</th>
+                                <th class='text-center'>Tanggal Masuk</th>
+                                <th class='text-center'>Tanggal Keluar</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- END --}}
+
+    {{-- Modal Edit --}}
+    <div class="modal fade" id="modal-edit" data-mode="edit" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title">Edit Data Karyawan</h3>
+                </div>
+                <form id="modalForm" class="form-horizontal" method="post" action="{{ route('/master-employee.edit') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+
+                    <div class="card-body">
+                    <input type="hidden" id="idemployee" name="editFaktur">
+                    <div class="form-group">
+                        <label class="" data-required="true">Upload Foto</label>
+                         <div id="previewImage">
+                            <img src="" id="oldImagePreview" width="120" height="150" style="border:1px solid #ccc; border-radius:5px; margin-bottom: 5px;" />
+                        </div>
+                        <input type="file" class="form-control form-control-sm" id="new-image" name="newImage">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Nama</label>
+                        <input type="text" class="form-control form-control-sm" id="new-name" name="new-name">
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Tanggal Lahir</label>
+                        <div class="input-group input-group-sm date">
+                            <input type="text" class="form-control flatpickr-input" id="new-birthday" name="new-birthday">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" id="birthDay"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                    <label class="required" data-required="true">Alamat</label>
+                    <textarea id="new-address" name="new-address" class="form-control form-control-sm"></textarea>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Kode Toko</label>
+                        <select id="editStoreCode" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off"></select>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Perusahaan</label>
+                        <select id="editOffice" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off"></select>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">No Handphone</label>
+                        <input type="text" class="form-control form-control-sm" id="new-phone" name="new-phone">
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Tanggal Masuk</label>
+                        <div class="input-group input-group-sm date">
+                            <input type="text" class="form-control flatpickr-input" id="new-join" name="new-join">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" id="joinDate"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Nomor Kartu Keluarga</label>
+                        <input type="text" class="form-control" id="new-kk" name="new-kk">
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Nomor KTP</label>
+                        <input type="text" class="form-control" id="new-ktp" name="new-ktp">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Jenis Kelamin</label>
+                        <select id="new-gender" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off">
+                            <option value="">Select at item</option>
+                            <option value="L">Laki-Laki</option>
+                            <option value="P">Perempuan</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Status</label>
+                        <select id="new-status" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off">
+                            <option value="">Select at item</option>
+                            <option value="1">Belum Menikah</option>
+                            <option value="2">Menikah</option>
+                            <option value="3">Duda</option>
+                            <option value="4">Janda</option>
+                        </select>
+                    </div>
+                    </div>
+                    
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="reset" class="btn-sm btn-danger" data-dismiss="modal" onclick="resetPage()"><i class="fa fa-times"></i>&nbsp; Batal</button>
+                    <button type="button" class="btn-sm btn-primary" onclick="editData()" id="submitadd"><i class="fas fa-save"></i>&nbsp; Simpan</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- END --}}
 @stop
 
 @section('content')
@@ -406,6 +634,7 @@
                                     let tglMasuk = row.join_date !== null ? row.join_date : row.tanggal_masuk;
                                     let kk = row.kk !== null ? row.kk : row.no_kk;
                                     let ktp = row.ktp !== null ? row.ktp : row.no_ktp;
+                                    console.log("cek1", row, data)
                                     return `
                                         <center>
                                             <div class="d-grid gap-2 d-md-flex justify-content-center">
@@ -496,6 +725,310 @@
                 }
             });
         }
+
+        $(document).on('click', 'a.detail', function() {
+            // Ambil data dari atribut data
+            let idEmployee = $(this).data('idemployee');
+            let nama = $(this).data('nama');
+            let tgllahir = $(this).data('tgllahir');
+            let alamat = $(this).data('alamat');
+            let kodetoko = $(this).data('kodetoko');
+            let homebase = $(this).data('homebase');
+            let perusahaan = $(this).data('perusahaan');
+            let md = $(this).data('md');
+            let brand = $(this).data('brand');
+            let handphone = $(this).data('handphone');
+            let tglmasuk = $(this).data('tglmasuk');
+            let nokk = $(this).data('nokk');
+            let noktp = $(this).data('noktp');
+            let jeniskelamin = $(this).data('jeniskelamin');
+            let status = $(this).data('status');
+            let tglkeluar = $(this).data('tglkeluar');
+            let note = $(this).data('note');
+
+            function formatDate(dateString) {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}-${month}-${year}`;
+            }
+
+            // Buka modal detail
+            $('#modal-detail').modal('show');
+            getHistoryData(noktp);
+            
+            // Set nilai form
+            $('#modal-detail #idemployee').val(idEmployee);
+            $('#modal-detail #new-name').val(nama);
+            $('#modal-detail #new-birthday').val(formatDate(tgllahir));
+            $('#modal-detail #new-address').val(alamat);
+            $('#modal-detail #new-phone').val(handphone);
+            $('#modal-detail #new-join').val(formatDate(tglmasuk));
+            $('#modal-detail #new-kk').val(nokk);
+            $('#modal-detail #new-ktp').val(noktp);
+            $('#modal-detail #new-out').val(formatDate(tglkeluar));
+            $('#modal-detail #new-note').val(note);
+            $('#modal-detail #new-gender').val(jeniskelamin).trigger('change');
+            $('#modal-detail #new-status').val(status).trigger('change');
+
+            if (tglkeluar) {
+                $('#modal-detail #new-out').val(formatDate(tglkeluar));
+                tglKeluar.setDate(formatDate(tglkeluar));
+            } else {
+                $('#modal-detail #new-out').val(getFormattedDate());
+                tglKeluar.setDate(getFormattedDate());
+            }
+            
+            // Handle select2 untuk kode toko
+            if(kodetoko) {
+                var $storeSelect = $('#modal-detail #new-store');
+                $storeSelect.empty();
+                var newOption = new Option(kodetoko + " || " + homebase, kodetoko, true, true);
+                $storeSelect.append(newOption).trigger('change');
+            }
+            
+            // Handle select2 untuk perusahaan
+            if(perusahaan) {
+                var $officeSelect = $('#modal-detail #new-office');
+                $officeSelect.empty();
+                var newOption = new Option(md + ' - ' + brand + " - " + perusahaan, perusahaan, true, true);
+                $officeSelect.append(newOption).trigger('change');
+            }
+            
+            // Simpan ID employee di form untuk keperluan update
+            $('#modal-detail #editFaktur').val(idEmployee);
+        });
+
+        function getHistoryData(noKtp) 
+        {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'get',
+                url: "{{ route('/master-employee.history', ['noKtp' => 'KTP_PLACEHOLDER']) }}"
+                    .replace('KTP_PLACEHOLDER', noKtp),
+                beforeSend: function() {
+                    showModalLoading();
+                },
+                success: function(response) {
+                    // Destroy DataTable jika sudah ada
+                    if ($.fn.DataTable.isDataTable('#table_details_info')) {
+                        $('#table_details_info').DataTable().destroy();
+                    }
+                    
+                    // Inisialisasi DataTable baru
+                    $('#table_details_info').DataTable({
+                        order: [],
+                        processing: true,
+                        pageLength: 10,
+                        data: response,
+                        columns: [
+                            {
+                                data: 'supplier',
+                                name: 'supplier',
+                                className: 'text-left'
+                            },
+                            {
+                                data: 'id_employee',
+                                name: 'id_employee',
+                                className: 'text-left'
+                            },
+                            {
+                                data: 'kode_toko',
+                                name: 'kode_toko',
+                                className: 'text-center'
+                            },
+                            {
+                                data: 'md_emp',
+                                name: 'md_emp',
+                                className: 'text-left',
+                                render: function(data, type, row) {
+                                    return row.md_emp + ' - ' + row.brand_emp + ' - ' + row.supplier;
+                                }
+                            },
+                            {
+                                data: 'tanggal_masuk',
+                                name: 'tanggal_masuk',
+                                className: 'text-center',
+                                render: function(data) {
+                                    if (!data) return '';
+                                    let date = new Date(data);
+                                    let day = String(date.getDate()).padStart(2, '0');
+                                    let month = String(date.getMonth() + 1).padStart(2, '0');
+                                    let year = date.getFullYear();
+                                    return `${day}-${month}-${year}`;
+                                }
+                            },
+                            {
+                                data: 'tanggal_keluar',
+                                name: 'tanggal_keluar',
+                                className: 'text-center',
+                                render: function(data) {
+                                    if (!data) return '';
+                                    let date = new Date(data);
+                                    let day = String(date.getDate()).padStart(2, '0');
+                                    let month = String(date.getMonth() + 1).padStart(2, '0');
+                                    let year = date.getFullYear();
+                                    return `${day}-${month}-${year}`;
+                                }
+                            }
+                        ]
+                    });
+                },
+                complete: function() {
+                    hideModalLoading();
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Gagal memuat data history',
+                        icon: 'error'
+                    });
+                }
+            });
+        }
+
+        $(document).on('click', 'a.edit', function() {
+            // Ambil data dari atribut data
+            let idEmployee = $(this).data('idemployee');
+            let image = $(this).data('image');
+            let nama = $(this).data('nama');
+            let tgllahir = $(this).data('tgllahir');
+            let alamat = $(this).data('alamat');
+            let kodetoko = $(this).data('kodetoko');
+            let perusahaan = $(this).data('perusahaan');
+            let handphone = $(this).data('handphone');
+            let tglmasuk = $(this).data('tglmasuk');
+            let nokk = $(this).data('nokk');
+            let noktp = $(this).data('noktp');
+            let jeniskelamin = $(this).data('jeniskelamin');
+            let status = $(this).data('status');
+            let tglkeluar = $(this).data('tglkeluar');
+            let note = $(this).data('note');
+            let brand = $(this).data('brand');
+            let homebase = $(this).data('homebase');
+            let md = $(this).data('md');
+
+            function formatDate(dateString) {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}-${month}-${year}`;
+            }
+
+            // Buka modal edit
+            $('#modal-edit').modal('show');
+            
+            // Set nilai form
+            $('#modal-edit #idemployee').val(idEmployee);
+
+            // Di bagian yang menampilkan gambar di modal edit, tambahkan cache busting
+            $('#modal-edit #oldImagePreview').attr('src', image ? image + '?t=' + new Date().getTime() : '/images/no-image.png?t=' + new Date().getTime());
+
+            $('#modal-edit #new-name').val(nama);
+            $('#modal-edit #new-birthday').val(formatDate(tgllahir));
+            $('#modal-edit #new-address').val(alamat);
+            $('#modal-edit #new-phone').val(handphone);
+            $('#modal-edit #new-join').val(formatDate(tglmasuk));
+            $('#modal-edit #new-kk').val(nokk);
+            $('#modal-edit #new-ktp').val(noktp);
+            $('#modal-edit #new-out').val(formatDate(tglkeluar));
+            $('#modal-edit #new-note').val(note);
+            $('#modal-edit #new-gender').val(jeniskelamin).trigger('change');
+            $('#modal-edit #new-status').val(status).trigger('change');
+
+            var $storeSelect = $('#modal-edit #editStoreCode');
+            $storeSelect.select2({
+                placeholder: 'Select a store',
+                ajax: {
+                    url: "{{ route('/master-employee.get-toko') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            searchTerm: params.term,
+                            limit: 50
+                        };
+                    },
+                    processResults: function(response) {
+                        var options = [];
+                        for(var i=0; i<response.length; i++) {
+                            options.push({
+                                id: response[i].homebase_terminal_id,
+                                homebase_terminal_id: response[i].homebase_terminal_id,
+                                homebase: response[i].homebase,
+                                text: response[i].homebase_terminal_id + " || " + response[i].homebase
+                            });
+                        }
+                        return {
+                            results: options
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            // Set nilai awal untuk kode toko
+            if(kodetoko) {
+                var newOption = new Option(kodetoko + " || " + homebase, kodetoko, true, true);
+                $storeSelect.append(newOption).trigger('change');
+            }
+
+            // Inisialisasi Select2 untuk perusahaan dengan data yang sesuai
+            var $officeSelect = $('#modal-edit #editOffice');
+            $officeSelect.select2({
+                placeholder: 'Select a supplier',
+                ajax: {
+                    url: "{{ route('/master-employee.get-supplier') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            searchTerm: params.term,
+                            limit: 50
+                        };
+                    },
+                    processResults: function(response) {
+                        var options = [];
+                        for(var i=0; i<response.length; i++) {
+                            options.push({
+                                id: response[i].md,
+                                md: response[i].md,
+                                detail_brand: response[i].detail_brand,
+                                nama_supplier: response[i].nama_supplier,
+                                text: response[i].md + " - " + response[i].detail_brand + ' - ' + response[i].nama_supplier
+                            });
+                        }
+                        return {
+                            results: options
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            // Set nilai awal untuk perusahaan
+            if(perusahaan) {
+                var newOption = new Option(md + ' - ' + brand + " - " + perusahaan, md, true, true);
+                $officeSelect.append(newOption).trigger('change');
+            }
+
+            if (tglkeluar) {
+                $('#modal-edit #new-out').val(formatDate(tglkeluar));
+                tglKeluar.setDate(formatDate(tglkeluar));
+            } else {
+                $('#modal-edit #new-out').val(getFormattedDate());
+                tglKeluar.setDate(getFormattedDate());
+            }
+            
+            // Simpan ID employee di form untuk keperluan update
+            $('#modal-edit #editFaktur').val(idEmployee);
+        });
 
         $(document).ready(function() {
             // Panggil getData() saat halaman pertama kali dimuat
@@ -753,6 +1286,102 @@
                         text: 'Gagal Memproses Data',
                         icon: 'error',
                         confirmButtonText: 'OK'
+                    });
+                },
+                complete: function() {
+                    hideModalLoading();
+                }
+            });
+        }
+
+        function editData() {
+            const name = $('#modal-edit #new-name').val();
+            const birthday = $('#modal-edit #new-birthday').val();
+            const address = $('#modal-edit #new-address').val();
+            const store = $('#modal-edit #editStoreCode').val();
+            const officeValue = $('#modal-edit #editOffice').val();
+            const officeText = $('#modal-edit #editOffice').select2('data')[0]?.text || '';
+            const noHandphone = $('#modal-edit #new-phone').val();
+            const joinDate = $('#modal-edit #new-join').val();
+            const kk = $('#modal-edit #new-kk').val();
+            const ktp = $('#modal-edit #new-ktp').val();
+            const gender = $('#modal-edit #new-gender').val();
+            const status = $('#modal-edit #new-status').val();
+            const idEmployee = $('#modal-edit #idemployee').val();
+            const imageFile = $('#modal-edit #new-image')[0].files[0];
+
+            if (!name || !birthday || !address || !store || !officeValue || !noHandphone || !joinDate || 
+                !kk || !ktp || !gender || !status || !idEmployee) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Semua field wajib diisi.',
+                    icon: 'warning'
+                });
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append('id_employee', idEmployee);
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
+            formData.append('nama', name);
+            formData.append('tanggal_lahir', birthday);
+            formData.append('alamat', address);
+
+            const stores = $('#modal-edit #editStoreCode').select2('data')[0];
+            if (stores) {
+                let parts = stores.text.split(" || ");
+                formData.append('homebase', parts[0] || '');
+                formData.append('homebase_terminal_id', parts[1] || '');
+            }
+
+            formData.append('no_handphone', noHandphone);
+            formData.append('tanggal_masuk', joinDate);
+            formData.append('no_kk', kk);
+            formData.append('no_ktp', ktp);
+            formData.append('jenis_kelamin', gender);
+            formData.append('status', status);
+
+            const office = $('#modal-edit #editOffice').select2('data')[0];
+            if (office) {
+                let parts = office.text.split(" - ");
+                formData.append('md', parts[0] || '');
+                formData.append('detail_brand', parts[1] || '');
+                formData.append('nama_supplier', parts[2] || '');
+            }
+
+            formData.append('_token', "{{ csrf_token() }}");
+
+            $.ajax({
+                url: "{{ route('/master-employee.edit') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Data berhasil diperbarui',
+                            icon: 'success'
+                        }).then(() => location.reload());
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'Gagal memperbarui data',
+                            icon: 'error'
+                        });
+                    }
+                },
+                beforeSend: function() {
+                    showModalLoading();
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message || 'Terjadi kesalahan',
+                        icon: 'error'
                     });
                 },
                 complete: function() {

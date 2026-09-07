@@ -228,7 +228,6 @@ class MasterEmployeeService{
       ], 500);
     }
   }
-
   public function addNewEmployee($request)
   {
       try {
@@ -345,7 +344,6 @@ class MasterEmployeeService{
           ], 500);
       }
   }
-
   public function excelToArrayWithMapping($path, $fieldMaps) {
     $spreadsheet = IOFactory::load($path);
     $data = [];
@@ -401,7 +399,6 @@ class MasterEmployeeService{
     }
     return $data;
   }
-
   private function parseDatabaseError($message)
   {
     // Jika terlalu panjang untuk kolom
@@ -421,7 +418,6 @@ class MasterEmployeeService{
     // Fallback: pesan umum
     return "Terjadi kesalahan pada data";
   }
-
   public function addNewUploadEmployee($request) {
     try {
       $fieldMaps = [
@@ -595,10 +591,82 @@ class MasterEmployeeService{
     $params['limit'] = 50;
     return $this->masterEmployeeRepository->getSupplierEmp($params);
   }
-
   public function getTokoEmp($params){
     $params['limit'] = 50;
     return $this->masterEmployeeRepository->getTokoEmployee($params);
+  }
+
+  public function getHistoryData($params)
+  {
+      $result = $this->masterEmployeeRepository->getHistoryData($params);
+      return $result;
+  }
+
+  public function editData($params)
+  {
+    try {
+      $id_employee = $params->id_employee;
+      $imagePath = null;
+
+      if ($params->hasFile('image')) {
+          $image = $params->file('image');
+          $imageName = 'employee_' . $id_employee . '.' . $image->getClientOriginalExtension();
+          $image->move(public_path('images'), $imageName);
+          $imagePath = 'images/' . $imageName;
+      }
+
+      $dataArray = [
+          'tanggal_masuk' => \Carbon\Carbon::createFromFormat('d-m-Y', $params->tanggal_masuk)->format('Y-m-d'),
+          'tanggal_lahir' => \Carbon\Carbon::createFromFormat('d-m-Y', $params->tanggal_lahir)->format('Y-m-d'),
+          'nama' => $params->nama,
+          'alamat' => $params->alamat,
+          'kode_toko' => $params->homebase,
+          'md_emp' => $params->md,
+          'brand_emp' => $params->detail_brand,
+          'supplier' => $params->nama_supplier,
+          'no_handphone' => $params->no_handphone,
+          'no_kk' => $params->no_kk,
+          'no_ktp' => $params->no_ktp,
+          'jenis_kelamin' => $params->jenis_kelamin,
+          'status' => $params->status,
+          'user_updated' => Auth::user()->username,
+          'date_updated' => now(),
+      ];
+
+      $data_mutasi = $this->masterEmployeeRepository->get_mutasi_tbl();
+      $kode_toko = $data_mutasi[0]->kode_toko;
+
+      $updateData = [
+          'tanggal_masuk' => \Carbon\Carbon::createFromFormat('d-m-Y', $params->tanggal_masuk)->format('Y-m-d'),
+          'kode_toko' => $params->homebase,
+          'nama_toko' => $params->homebase_terminal_id,
+          'md_emp' => $params->md,
+          'brand_emp' => $params->detail_brand,
+          'supplier' => $params->nama_supplier,
+          'no_kk' => $params->no_kk,
+          'no_ktp' => $params->no_ktp,
+          'user_updated' => Auth::user()->username,
+          'date_updated' => now(),
+      ];
+
+      if ($imagePath) {
+          $dataArray['image_employee'] = $imagePath;
+      }
+
+      $this->masterEmployeeRepository->editDataEmp($id_employee, $dataArray);
+
+      $this->masterEmployeeRepository->editDataMutasi($id_employee, $kode_toko, $updateData);
+
+      return response()->json([
+          'success' => true,
+          'message' => 'Data berhasil diperbaharui'
+      ]);
+    } catch (\Exception $e) {
+      return response()->json([
+          'success' => false,
+          'message' => 'Gagal memperbarui data: ' . $e->getMessage()
+      ], 500);
+    }
   }
 }
 ?>

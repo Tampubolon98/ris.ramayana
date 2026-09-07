@@ -151,6 +151,59 @@ class MasterEmployeeRepository{
             ->first();
   }
 
+  public function getHistoryData($params)
+  {
+    $query = $this->connRis->table('master_employee_spg as a')
+            ->select('a.*')
+            ->where('a.no_ktp', $params['no_ktp'])
+            ->whereIn('a.kategori_karyawan', ['SPG', 'PKL'])
+            ->orderBy('a.date_create', 'asc')
+            ->get();
+
+    $suppliers = $this->connRis->table('supplier as a')
+            ->select('a.supplier_code', 'a.supplier_name')
+            ->where('a.supplier_type', 2)
+            ->get()
+            ->keyBy('supplier_code');
+
+    $mutasi = $this->connRis->table('mutasi_emp as a')
+            ->select('a.*')
+            ->where('a.no_ktp', $params['no_ktp'])
+            ->orderBy('a.date_create', 'desc')
+            ->get();
+
+    // Gabungkan data
+    foreach ($query as $employee) {
+        $employee->supplier_name = $suppliers[$employee->supplier]->supplier_name ?? null;
+    }
+
+    $combine = $mutasi->merge($query);
+    return $combine;
+  }
+
+  public function get_mutasi_tbl()
+  {
+    return $this->connRis->table('mutasi_emp as a') 
+                    ->select('a.*')
+                    ->orderBy('a.id_employee', 'desc')
+                    ->get();
+  }
+
+  public function editDataEmp($id_employee, $dataArray)
+  {
+    $this->connRis->table('master_employee_spg')
+          ->where('id_employee', $id_employee)
+          ->update($dataArray);
+  }
+
+  public function editDataMutasi($id_employee, $kode_toko, $updateData)
+  {
+    $this->connRis->table('mutasi_emp as a')
+                  ->where('a.id_employee', $id_employee)
+                  ->where('a.kode_toko', $kode_toko)
+                  ->update($updateData);
+  }
+
   public function addNewMutasi($params){
     return $this->connRis->table('mutasi_emp')->insert($params);
   }

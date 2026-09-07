@@ -8,6 +8,7 @@ use App\Http\Services\Employees\MasterEmployeeService;
 
 class MasterEmployeeController extends Controller {
   private $masterEmployeeService;
+
   public function __construct(MasterEmployeeService $masterEmployeeService)
   {
     $this->masterEmployeeService = $masterEmployeeService;
@@ -35,6 +36,23 @@ class MasterEmployeeController extends Controller {
   public function getSupplier(Request $params){
     return $this->masterEmployeeService->getSupplierEmp($params);
   }
+
+  public function getHistoryData(Request $noKtp)
+  {
+    $params = [
+        'no_ktp' => $noKtp
+    ];
+    
+    $result = $this->masterEmployeeService->getHistoryData($params);
+    return $result;
+  }
+
+  public function editData(Request $params)
+  {
+      $result = $this->masterEmployeeService->editData($params);
+      return $result;
+  }
+
   public function indexRehire() {
     return view('employees.indexRehireEmployee');
   }
