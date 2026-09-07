@@ -14,7 +14,17 @@ class MasterEmployeeController extends Controller {
     $this->masterEmployeeService = $masterEmployeeService;
   }
   public function indexEmployee() {
-    return view('employees.indexMasterEmployee');
+    $access_create = false;
+    $arrParam = array(
+        'emp_usr_id' => 'SYSTEM',
+        'emp_department_id' => '725'
+    );
+
+    $data_user = $this->masterEmployeeService->validate_user($arrParam);
+    if(count($data_user) > 0) {
+        $access_create = true;
+    }
+    return view('employees.indexMasterEmployee', compact('access_create'));
   }
   public function downloadTemplate(Request $params) {
     return $this->masterEmployeeService->downloadTemplate($params);
@@ -50,6 +60,18 @@ class MasterEmployeeController extends Controller {
   public function editData(Request $params)
   {
       $result = $this->masterEmployeeService->editData($params);
+      return $result;
+  }
+
+  public function terminateData(Request $params)
+  {
+      $result = $this->masterEmployeeService->terminateData($params);
+      return $result;
+  }
+
+  public function get_search_data(Request $params)
+  {
+      $result = $this->masterEmployeeService->get_search_data($params);
       return $result;
   }
 

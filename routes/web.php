@@ -41,6 +41,11 @@ Route::get('/master-employee.history/{noKtp}', 'Employees\MasterEmployeeControll
 
 Route::post('/master-employee.edit', 'Employees\MasterEmployeeController@editData')->name('/master-employee.edit');
 
+Route::post('/master-employee.terminate', 'Employees\MasterEmployeeController@terminateData')->name('/master-employee.terminate');
+
+Route::get('/master-employee.search', 'Employees\MasterEmployeeController@get_search_data')->name('/master-employee.search');
+
+
 // rehire employee
 Route::get('/rehire-employee.index', 'Employees\MasterEmployeeController@indexRehire')->name('rehire-employee.index');
 

@@ -668,5 +668,53 @@ class MasterEmployeeService{
       ], 500);
     }
   }
+
+  public function terminateData($params)
+  {
+    try {
+      $dataArray = [
+          'tanggal_selesai' => \Carbon\Carbon::createFromFormat('d-m-Y', $params->tanggal_keluar)->format('Y-m-d'),
+          'keterangan' => $params->note,
+          'status_aktif' => '1',
+          'user_terminate' => 'SYSTEM',
+          'date_terminate' => now(),
+      ];
+
+      $this->masterEmployeeRepository->terminateData($params->id_employee, $dataArray);
+
+      return response()->json([
+          'success' => true,
+          'message' => 'Data berhasil diterminate'
+      ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal melakukan terminate data: ' . $e->getMessage()
+        ], 500);
+    }
+  }
+
+  public function get_search_data($params)
+  {
+    try {
+      $arrParams = array(
+        'emp_usr_id' => 'SYSTEM'
+      );
+      $data_user = $this->masterEmployeeRepository->validate_user($arrParams);
+      $params['store_code'] = array_column($data_user, 'store_code');
+      
+      $result = $this->masterEmployeeRepository->get_search_data($params);
+      return $result;
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function validate_user($params) {
+    return $this->masterEmployeeRepository->validate_user($params);
+  }
 }
 ?>
