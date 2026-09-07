@@ -11,42 +11,93 @@ class MasterEmployeeController extends Controller {
 
   public function __construct(MasterEmployeeService $masterEmployeeService)
   {
-    $this->masterEmployeeService = $masterEmployeeService
+    $this->masterEmployeeService = $masterEmployeeService;
   }
   public function indexEmployee() {
-    return view('employees.indexMasterEmployee');
+    $access_create = false;
+    $arrParam = array(
+        'emp_usr_id' => 'SYSTEM',
+        'emp_department_id' => '725'
+    );
+
+    $data_user = $this->masterEmployeeService->validate_user($arrParam);
+    if(count($data_user) > 0) {
+        $access_create = true;
+    }
+    return view('employees.indexMasterEmployee', compact('access_create'));
+  }
+  public function downloadTemplate(Request $params) {
+    return $this->masterEmployeeService->downloadTemplate($params);
+  }
+  public function newEmployee(Request $params){
+    return $this->masterEmployeeService->addNewEmployee($params);
+  }
+
+  public function newUploadEmployee(Request $params) {
+    return $this->masterEmployeeService->addNewUploadEmployee($params);
+  }
+  public function getToko(Request $params){
+    $result = $this->masterEmployeeService->getTokoEmp($params);
+    return $result;
+  }
+  public function getEmployees() {
+    return $this->masterEmployeeService->getEmployees();
+  }
+  public function getSupplier(Request $params){
+    return $this->masterEmployeeService->getSupplierEmp($params);
+  }
+
+  public function getHistoryData(Request $noKtp)
+  {
+    $params = [
+        'no_ktp' => $noKtp
+    ];
+    
+    $result = $this->masterEmployeeService->getHistoryData($params);
+    return $result;
+  }
+
+  public function editData(Request $params)
+  {
+      $result = $this->masterEmployeeService->editData($params);
+      return $result;
+  }
+
+  public function terminateData(Request $params)
+  {
+      $result = $this->masterEmployeeService->terminateData($params);
+      return $result;
+  }
+
+  public function get_search_data(Request $params)
+  {
+      $result = $this->masterEmployeeService->get_search_data($params);
+      return $result;
   }
 
   public function indexRehire() {
     return view('employees.indexRehireEmployee');
   }
-
   public function indexTerminate() {
     return view('employees.indexTerminateEmployee');
   }
-
   public function indexReportSPG() {
     return view('employees.indexReportEmployeeSPG');
   }
-
   public function indexBrand() {
     return view('employees.indexMasterBrand');
   }
-
   public function tambahDataBrand(Request $params){
     $result = $this->masterEmployeeService->tambahDataBrand($params);
     return $result;
   }
-
   public function getDataBrand(){
     $result = $this->masterEmployeeService->getDataBrand();
     return $result;
   }
-
   public function indexReportCV() {
     return view('employees.indexReportEmployeeCV');
   }
-
   public function indexMutasi() {
     return view('employees.indexMutasiEmployee');
   }

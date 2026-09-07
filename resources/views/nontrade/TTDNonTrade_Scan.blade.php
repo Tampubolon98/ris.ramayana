@@ -37,16 +37,3 @@
   </div>
 </div>
 
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-    <style>
-        .nav-tabs {
-            border-bottom: none !important;
-        }
-    </style>
-@stop
-
-@section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
-@stop

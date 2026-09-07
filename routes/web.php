@@ -25,6 +25,27 @@ Route::get('/home', 'HomeController@index')->name('home');
 // master employee
 Route::get('/master-employee.index', 'Employees\MasterEmployeeController@indexEmployee')->name('master-employee.index');
 
+Route::get('/master-employee.template', 'Employees\MasterEmployeeController@downloadTemplate')->name('/master-employee.template');
+
+Route::get('/master-employee.get-employee', 'Employees\MasterEmployeeController@getEmployees')->name('/master-employee.get-employee');
+
+Route::post('/master-employee.add-employee', 'Employees\MasterEmployeeController@newEmployee')->name('/master-employee.add-employee');
+
+Route::post('/master-employee.upload', 'Employees\MasterEmployeeController@newUploadEmployee')->name('/master-employee.upload');
+
+Route::get('/master-employee.get-supplier', 'Employees\MasterEmployeeController@getSupplier')->name('/master-employee.get-supplier');
+
+Route::get('/master-employee.get-toko', 'Employees\MasterEmployeeController@getToko')->name('/master-employee.get-toko');
+
+Route::get('/master-employee.history/{noKtp}', 'Employees\MasterEmployeeController@getHistoryData')->name('/master-employee.history');
+
+Route::post('/master-employee.edit', 'Employees\MasterEmployeeController@editData')->name('/master-employee.edit');
+
+Route::post('/master-employee.terminate', 'Employees\MasterEmployeeController@terminateData')->name('/master-employee.terminate');
+
+Route::get('/master-employee.search', 'Employees\MasterEmployeeController@get_search_data')->name('/master-employee.search');
+
+
 // rehire employee
 Route::get('/rehire-employee.index', 'Employees\MasterEmployeeController@indexRehire')->name('rehire-employee.index');
 
