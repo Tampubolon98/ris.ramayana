@@ -389,6 +389,34 @@ class MasterEmployeeRepository{
                   ->insert($insertData);
     return $query;
   }
+
+  public function get_list_terminate()
+  {
+    $employees = $this->connRis->table('master_employee_spg as a')
+                ->select('a.*')
+                ->where('status_aktif', '1')
+                ->orderBy('a.id_employee', 'desc')
+                ->distinct()
+                ->get();
+
+    $toko = $this->connRis->table('p_c_x_homebase_tbl as a')
+            ->select([
+                    DB::raw("substr(a.homebase,5) as homebase"), 
+                    DB::raw("substr(a.homebase,1,4) as homebase_terminal_id")
+                    ])
+            ->distinct()
+            ->get()
+            ->keyBy('homebase_terminal_id');
+
+    // Gabungkan data
+    foreach($employees as $data) {
+        $data->homebase = isset($toko[$data->kode_toko]) 
+            ? $toko[$data->kode_toko]->homebase 
+            : null;
+    }
+
+    return $employees;
+  }
 }
 
 ?>

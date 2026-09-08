@@ -98,6 +98,13 @@ class MasterEmployeeController extends Controller {
   public function indexTerminate() {
     return view('employees.indexTerminateEmployee');
   }
+
+  public function get_list_terminate()
+  {
+      $result = $this->masterEmployeeService->get_list_terminate();
+      return $result;
+  }
+
   public function indexReportSPG() {
     return view('employees.indexReportEmployeeSPG');
   }
