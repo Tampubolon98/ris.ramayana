@@ -204,6 +204,113 @@ class MasterEmployeeRepository{
                   ->update($updateData);
   }
 
+  public function terminateData($id_employee, $dataArray)
+  {
+    return $this->connRis->table('master_employee_spg')
+    ->where('id_employee', $id_employee)
+    ->update($dataArray);
+  }
+
+  public function validate_user($params)
+  {
+    $sql = "SELECT " .
+			"m_approval_emp.*, " .
+			"departement.department_name, " .
+			"master_store.ms_location_code, " .
+			"master_store.ms_type " .
+			"FROM m_approval_emp " .
+			"LEFT JOIN ntd.departement ON departement.department_code = m_approval_emp.emp_department_id " .
+			"LEFT JOIN ntd.master_store ON master_store.ms_code = m_approval_emp.store_code";
+		$where = "";
+
+    if (isset($params['emp_department_id'])) {
+			if (!empty($where)) $where = $where . " AND ";
+			$where = $where . " emp_department_id = '" . $params['emp_department_id'] . "' ";
+		}
+
+    if (isset($params['emp_usr_id'])) {
+			if (!empty($where)) $where = $where . " AND ";
+			$where = $where . " emp_usr_id = '" . $params['emp_usr_id'] . "' ";
+		}
+
+    if (isset($params['store_code'])) {
+			if (!empty($where)) $where = $where . " AND ";
+			$where = $where . "m_approval_emp.store_code = '" . $params['store_code'] . "' ";
+		}
+
+    if (!empty($where)) $sql = $sql . ' WHERE ' . $where;
+    $sql .= " ORDER BY m_approval_emp.emp_date_create DESC";
+		$data = $this->connRis->select($sql);
+		return $data;
+  }
+
+  public function get_search_data($params)
+  {
+    $kode_toko = isset($params['kode_toko']) ? $params['kode_toko'] : null;
+    $kategori = isset($params['kategori_karyawan']) ? $params['kategori_karyawan'] : null;
+    $storeCodes = isset($params['store_code']) ? $params['store_code'] : [];
+
+    $query = $this->connRis->table('master_employee_spg as a')
+                            ->leftJoin('master_brand_emp as b', 'a.supplier', '=', 'b.nama_supplier')
+                            ->select('a.*', 'b.*')
+                            ->whereIn('a.kategori_karyawan', ['SPG', 'PKL'])
+                            ->where('a.status_aktif', '0')
+                            ->orderBy('a.id_employee', 'desc')
+                            ->distinct();
+
+    if($kategori && $kategori !== 'ALL') {
+        $query->where('a.kategori_karyawan', $kategori);
+    }
+
+    if($kode_toko) {
+        $query->where('a.kode_toko', $kode_toko);
+    } else {
+        if(!empty($storeCodes) && !in_array('RHO', (array) $storeCodes)) {
+            $query->whereIn('a.kode_toko', $storeCodes);
+        }
+    }
+
+    $employees = $query->get();
+
+    $toko = $this->connRis->table('p_c_x_homebase_tbl as a')
+            ->select([
+                    DB::raw("substr(a.homebase,5) as homebase"), 
+                    DB::raw("substr(a.homebase,1,4) as homebase_terminal_id")
+                    ])
+            ->distinct()
+            ->get()
+            ->keyBy('homebase_terminal_id');
+
+    $mutasi = $this->connRis->table('mutasi_emp as a')
+            ->select('a.kode_toko as store', 'a.tanggal_masuk as join_date', 'a.id_employee', 'a.nama_toko as store_name', 'a.tanggal_keluar as out_date')
+            ->get()
+            ->keyBy('id_employee');
+
+    foreach($employees as $data) {
+        $data->homebase = isset($toko[$data->kode_toko]) 
+            ? $toko[$data->kode_toko]->homebase 
+            : null;
+
+        $data->store = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->store
+            : null;
+
+        $data->join_date = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->join_date
+            : null;
+
+        $data->store_name = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->store_name
+            : null;
+
+        $data->out_date = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->out_date
+            : null;
+    }
+
+    return $employees;
+  }
+
   public function addNewMutasi($params){
     return $this->connRis->table('mutasi_emp')->insert($params);
   }
@@ -257,6 +364,30 @@ class MasterEmployeeRepository{
     // }
 
     return $query->get();
+  }
+
+  public function getRehire($params)
+  {
+    $sql = $this->connRis->table('master_employee_spg as a')
+            ->select('a.*')
+            ->where('no_ktp', $params->no_ktp)
+            ->distinct();
+
+    return $sql->get();
+  }
+
+  public function get_category($category) {
+    $data = $this->connRis->table('master_employee_spg')
+                  ->where('kategori_karyawan', $category)
+                  ->orderBy('id_employee', 'desc')
+                  ->first();
+    return $data;
+  }
+
+  public function addRehire($insertData) {
+    $query = $this->connRis->table('master_employee_spg')
+                  ->insert($insertData);
+    return $query;
   }
 }
 

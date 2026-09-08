@@ -469,6 +469,136 @@
         </div>
     </div>
     {{-- END --}}
+
+    {{-- Modal Terminate --}}
+    <div class="modal fade" id="modal-terminate" data-mode="terminate" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title">Terminate Data Karyawan</h3>
+                </div>
+                <form id="modalForm" class="form-horizontal" method="post" action="{{ route('/master-employee.terminate') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+
+                    <div class="card-body">
+                    <input type="hidden" id="idemployee" name="editFaktur">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Nama</label>
+                        <input type="text" class="form-control form-control-sm" id="new-name" name="new-name" disabled>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Tanggal Lahir</label>
+                        <div class="input-group input-group-sm date">
+                            <input type="text" class="form-control flatpickr-input" id="new-birthday" name="new-birthday" disabled>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" id="birthDay"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                    <label class="required" data-required="true">Alamat</label>
+                    <textarea id="new-address" name="new-address" class="form-control form-control-sm" disabled></textarea>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Kode Toko</label>
+                        <select id="new-store" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off" disabled></select>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Perusahaan</label>
+                        <select id="new-office" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off" disabled></select>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">No Handphone</label>
+                        <input type="text" class="form-control form-control-sm" id="new-phone" name="new-phone" maxlength="16" disabled>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Tanggal Masuk</label>
+                        <div class="input-group input-group-sm date">
+                            <input type="text" class="form-control flatpickr-input" id="new-join" name="new-join" disabled>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" id="joinDate"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Nomor Kartu Keluarga</label>
+                        <input type="text" class="form-control" id="new-kk" name="new-kk" maxlength="18" disabled>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Nomor KTP</label>
+                        <input type="text" class="form-control" id="new-ktp" name="new-ktp" maxlength="18" disabled>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Jenis Kelamin</label>
+                        <select id="new-gender" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off" disabled>
+                            <option value="">Select at item</option>
+                            <option value="L">Laki-Laki</option>
+                            <option value="P">Perempuan</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label class="required" data-required="true">Status</label>
+                        <select id="new-status" class="form-control form-control-sm select2" style="width: 100%;" required="" autocomplete="off" disabled>
+                            <option value="">Select at item</option>
+                            <option value="1">Belum Menikah</option>
+                            <option value="2">Menikah</option>
+                            <option value="3">Duda</option>
+                            <option value="4">Janda</option>
+                        </select>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label class="required" data-required="true">Tanggal Keluar</label>
+                            <div class="input-group input-group-sm date">
+                                <input type="text" class="form-control flatpickr-input" id="new-out" name="new-out">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text" id="outDate"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required" data-required="true">Catatan Kerja Karyawan</label>
+                        <textarea id="new-note" name="new-note" class="form-control form-control-sm"></textarea>
+                    </div>
+                    
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="reset" class="btn-sm btn-danger" data-dismiss="modal" onclick="resetPage()"><i class="fa fa-times"></i>&nbsp; Batal</button>
+                    <button type="button" class="btn-sm btn-primary" onclick="terminateData()" id="submitadd"><i class="fas fa-save"></i>&nbsp; Terminate</button>
+                </div>
+                </form>
+            </div>
+        </div>
+     </div>
+    {{-- END --}}
 @stop
 
 @section('content')
@@ -634,7 +764,6 @@
                                     let tglMasuk = row.join_date !== null ? row.join_date : row.tanggal_masuk;
                                     let kk = row.kk !== null ? row.kk : row.no_kk;
                                     let ktp = row.ktp !== null ? row.ktp : row.no_ktp;
-                                    console.log("cek1", row, data)
                                     return `
                                         <center>
                                             <div class="d-grid gap-2 d-md-flex justify-content-center">
@@ -1030,6 +1159,80 @@
             $('#modal-edit #editFaktur').val(idEmployee);
         });
 
+        $(document).on('click', 'a.terminate', function() {
+            // Ambil data dari atribut data
+            let idEmployee = $(this).data('idemployee');
+            let nama = $(this).data('nama');
+            let tgllahir = $(this).data('tgllahir');
+            let alamat = $(this).data('alamat');
+            let kodetoko = $(this).data('kodetoko');
+            let homebase = $(this).data('homebase');
+            let perusahaan = $(this).data('perusahaan');
+            let md = $(this).data('md');
+            let brand = $(this).data('brand');
+            let handphone = $(this).data('handphone');
+            let tglmasuk = $(this).data('tglmasuk');
+            let nokk = $(this).data('nokk');
+            let noktp = $(this).data('noktp');
+            let jeniskelamin = $(this).data('jeniskelamin');
+            let status = $(this).data('status');
+            let tglkeluar = $(this).data('tglkeluar');
+            let note = $(this).data('note');
+
+            function formatDate(dateString) {
+                if (!dateString) return '';
+                const date = new Date();
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}-${month}-${year}`;
+            }
+
+            // Buka modal terminate
+            $('#modal-terminate').modal('show');
+            
+            // Set nilai form
+            $('#modal-terminate #idemployee').val(idEmployee);
+            $('#modal-terminate #new-name').val(nama);
+            $('#modal-terminate #new-birthday').val(formatDate(tgllahir));
+            $('#modal-terminate #new-address').val(alamat);
+            $('#modal-terminate #new-phone').val(handphone);
+            $('#modal-terminate #new-join').val(formatDate(tglmasuk));
+            $('#modal-terminate #new-kk').val(nokk);
+            $('#modal-terminate #new-ktp').val(noktp);
+            $('#modal-terminate #new-out').val(formatDate(tglkeluar));
+            $('#modal-terminate #new-note').val(note);
+            $('#modal-terminate #new-gender').val(jeniskelamin).trigger('change');
+            $('#modal-terminate #new-status').val(status).trigger('change');
+
+            if (tglkeluar) {
+                $('#modal-terminate #new-out').val(formatDate(tglkeluar));
+                tglKeluar.setDate(formatDate(tglkeluar));
+            } else {
+                $('#modal-terminate #new-out').val(getFormattedDate());
+                tglKeluar.setDate(getFormattedDate());
+            }
+            
+            // Handle select2 untuk kode toko
+            if(kodetoko) {
+                var $storeSelect = $('#modal-terminate #new-store');
+                $storeSelect.empty();
+                var newOption = new Option(kodetoko + " || " + homebase, kodetoko, true, true);
+                $storeSelect.append(newOption).trigger('change');
+            }
+            
+            // Handle select2 untuk perusahaan
+            if(perusahaan) {
+                var $officeSelect = $('#modal-terminate #new-office');
+                $officeSelect.empty();
+                var newOption = new Option(md + ' - ' + brand + " - " + perusahaan, perusahaan, true, true);
+                $officeSelect.append(newOption).trigger('change');
+            }
+            
+            // Simpan ID employee di form untuk keperluan update
+            $('#modal-terminate #editFaktur').val(idEmployee);
+        });
+
         $(document).ready(function() {
             // Panggil getData() saat halaman pertama kali dimuat
             getDataEmp();
@@ -1180,6 +1383,37 @@
                 if (isValid) {
                     this.submit(); 
                 } 
+            });
+
+            $('#storeCode').select2({
+                placeholder: 'Select an store code',
+                ajax: {
+                    url: "{{ route('/master-employee.get-toko') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (data) {
+                    return {
+                        searchTerm: data.term,
+                        limit: 50
+                    };
+                    },
+                    processResults: function (response) {
+                    var lov = [];
+
+                    for(var i=0; i<response.length; i++) {
+                        var data_lov = {};
+                        data_lov.id = response[i].homebase_terminal_id;
+                        data_lov.text = response[i].homebase_terminal_id + " || " + response[i].homebase;
+
+                        lov.push(data_lov);
+                    }
+                    
+                    return {
+                        results: lov
+                    };
+                    },
+                    cache: true
+                }
             });
 
             $('#new-store').select2({
@@ -1386,6 +1620,258 @@
                 },
                 complete: function() {
                     hideModalLoading();
+                }
+            });
+        }
+
+        function terminateData() {
+            let tglkeluar = $('#modal-terminate #new-out').val();
+            let note = $('#modal-terminate #new-note').val();
+            let idemployee = $('#modal-terminate #idemployee').val();
+
+            $.ajax({
+                url: "{{ route('/master-employee.terminate') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    tanggal_keluar: tglkeluar,
+                    note: note,
+                    id_employee: idemployee
+                },
+                success: function(response) {
+                    if(response.success) {
+                        Swal.fire({
+                            title: 'Success',
+                            text: response.message || 'Data berhasil diterminate',
+                            icon: 'success'
+                        }).then(() => location.reload());
+                    } else {
+                        Swal.fire({
+                            title: 'Failed',
+                            text: response.message || "Terjadi kesalahan saat menyimpan data",
+                            icon: 'error'
+                        });
+                    }
+                },
+                beforeSend: function() {
+                    showModalLoading();
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Gagal menyimpan data. Silahkan coba lagi.',
+                        icon: 'error'
+                    });
+                },
+                complete: function() {
+                    hideModalLoading();
+                }
+            });
+        }
+
+        function get_search_data() 
+        {
+            var params = {};
+            var kode_toko = $('#storeCode').val();
+            var kategori = $('#categoryEmployee').val();
+
+            if (kode_toko) {
+                params.kode_toko = kode_toko;
+            }
+            
+            if (kategori) {
+                params.kategori_karyawan = kategori;
+            }
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'get',
+                url: "{{ route('/master-employee.search') }}",
+                data: params,
+                beforeSend: function() {
+                    showModalLoading();
+                },
+                success: function(data) {
+                    if ($.fn.DataTable.isDataTable('#list_table')) {
+                        $('#list_table').DataTable().destroy();
+                    }
+                    
+                    // Inisialisasi DataTable baru
+                    $('#list_table').DataTable({
+                        order: [],
+                        destroy: true,
+                        processing: true,
+                        pageLength: 10,
+                        data: data,
+                        columns: [
+                            {
+                                data: 'id_employee',
+                                name: 'a.id_employee',
+                                className: 'text-left'
+                            },
+                            {
+                                data: 'nama',
+                                name: 'a.nama',
+                                className: 'text-left'
+                            },
+                            {
+                                data: 'tanggal_masuk',
+                                name: 'a.tanggal_masuk',
+                                className: 'text-center',
+                                render: function(data) {
+                                    if (!data) return '';
+                                    let today = new Date(data);
+                                    let day = String(today.getDate()).padStart(2, '0');
+                                    let month = String(today.getMonth() + 1).padStart(2, '0');
+                                    let year = today.getFullYear();
+                                    return `${day}-${month}-${year}`;
+                                }
+                            },
+                            {
+                                data: 'kode_toko',
+                                name: 'a.kode_toko',
+                                className: 'text-center'
+                            },
+                            {
+                                data: 'supplier',
+                                name: 'a.supplier',
+                                className: 'text-left',
+                                render: function(data, type, row) {
+                                    return row.md_emp + ' - ' + row.brand_emp + ' - ' + row.supplier;
+                                }
+                            },
+                            {
+                                data: 'kode_toko',
+                                name: 'a.kode_toko',
+                                className: 'text-center',
+                                width: '200px',
+                                render: function(data, type, row) {
+                                    let md = row.md !== null ? row.md : row.md_emp;
+                                    let brand = row.brand !== null ? row.brand : row.brand_emp;
+                                    let supplier = row.detail_brand !== null ? row.detail_brand : row.supplier;
+                                    let store = row.store !== null ? row.store : row.kode_toko;
+                                    let storeName = row.store_name !== null ? row.store_name : row.homebase;
+                                    let tglMasuk = row.join_date !== null ? row.join_date : row.tanggal_masuk;
+                                    let tglKeluar = row.out_date !== null ? row.out_date : row.tanggal_keluar;
+                                    let kk = row.kk !== null ? row.kk : row.no_kk;
+                                    let ktp = row.ktp !== null ? row.ktp : row.no_ktp;
+                                    return `
+                                        <center>
+                                            <div class="d-grid gap-2 d-md-flex justify-content-center">
+                                                @if ($access_create)
+                                                <span data-toggle="tooltip" title="Edit Data" data-placement="bottom">
+                                                    <a href="javascript:void(0)" class="btn btn-sm btn-primary mr-2 edit" 
+                                                    data-target="#modal-edit" data-toggle="modal"
+                                                    data-idemployee="${row.id_employee}"
+                                                    data-nama="${row.nama}"
+                                                    data-tgllahir="${row.tanggal_lahir}"
+                                                    data-alamat="${row.alamat}"
+                                                    data-kodetoko="${store}"
+                                                    data-homebase="${storeName}"
+                                                    data-perusahaan="${supplier}"
+                                                    data-brand="${brand}"
+                                                    data-md="${md}"
+                                                    data-handphone="${row.no_handphone}"
+                                                    data-tglmasuk="${tglMasuk}"
+                                                    data-nokk="${kk}"
+                                                    data-noktp="${ktp}"
+                                                    data-jeniskelamin="${row.jenis_kelamin}"
+                                                    data-status="${row.status}"
+                                                    data-note="${row.keterangan}">
+                                                    <i class="fas fa-edit"></i>&nbsp Edit
+                                                    </a>
+                                                </span>
+
+                                                <span title="Detail Data" data-toggle="tooltip" data-placement="bottom">
+                                                    <a href="javascript:void(0)" class="btn btn-sm btn-info mr-2 detail" data-target="#modal-detail" data-toggle="modal"
+                                                    data-idemployee="${row.id_employee}"
+                                                    data-nama="${row.nama}"
+                                                    data-tgllahir="${row.tanggal_lahir}"
+                                                    data-alamat="${row.alamat}"
+                                                    data-kodetoko="${store}"
+                                                    data-homebase="${storeName}"
+                                                    data-perusahaan="${supplier}"
+                                                    data-brand="${brand}"
+                                                    data-md="${md}"
+                                                    data-handphone="${row.no_handphone}"
+                                                    data-tglmasuk="${tglMasuk}"
+                                                    data-nokk="${kk}"
+                                                    data-noktp="${ktp}"
+                                                    data-jeniskelamin="${row.jenis_kelamin}"
+                                                    data-status="${row.status}"
+                                                    data-note="${row.keterangan}">
+                                                        <i class="fas fa-eye"></i>&nbsp View
+                                                    </a>
+                                                </span>
+
+                                                <span data-toggle="tooltip" title="Delete Data" data-placement="bottom">
+                                                    <a href="javascript:void(0)" class="btn btn-sm btn-danger mr-2 terminate" 
+                                                    data-target="#modal-terminate" data-toggle="modal"
+                                                    data-idemployee="${row.id_employee}"
+                                                    data-nama="${row.nama}"
+                                                    data-tgllahir="${row.tanggal_lahir}"
+                                                    data-alamat="${row.alamat}"
+                                                    data-kodetoko="${store}"
+                                                    data-homebase="${storeName}"
+                                                    data-perusahaan="${supplier}"
+                                                    data-brand="${brand}"
+                                                    data-md="${md}"
+                                                    data-handphone="${row.no_handphone}"
+                                                    data-tglmasuk="${tglMasuk}"
+                                                    data-nokk="${kk}"
+                                                    data-noktp="${ktp}"
+                                                    data-jeniskelamin="${row.jenis_kelamin}"
+                                                    data-status="${row.status}"
+                                                    data-tglkeluar="${tglKeluar}"
+                                                    data-note="${row.keterangan}">
+                                                    <i class="fas fa-trash"></i>&nbsp Delete
+                                                    </a>
+                                                </span>
+                                                @else
+                                                <span title="Detail Data" data-toggle="tooltip" data-placement="bottom">
+                                                    <a href="javascript:void(0)" class="btn btn-sm btn-info mr-2 detail" data-target="#modal-detail" data-toggle="modal"
+                                                    data-idemployee="${row.id_employee}"
+                                                    data-nama="${row.nama}"
+                                                    data-tgllahir="${row.tanggal_lahir}"
+                                                    data-alamat="${row.alamat}"
+                                                    data-kodetoko="${store}"
+                                                    data-homebase="${storeName}"
+                                                    data-perusahaan="${supplier}"
+                                                    data-brand="${brand}"
+                                                    data-md="${md}"
+                                                    data-handphone="${row.no_handphone}"
+                                                    data-tglmasuk="${tglMasuk}"
+                                                    data-nokk="${kk}"
+                                                    data-noktp="${ktp}"
+                                                    data-jeniskelamin="${row.jenis_kelamin}"
+                                                    data-status="${row.status}"
+                                                    data-note="${row.keterangan}">
+                                                        <i class="fas fa-eye"></i>&nbsp View
+                                                    </a>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </center>
+                                    `;
+                                }
+                            }
+                        ]
+                    });
+
+                    $('#div_table').show();
+                },
+                complete: function() {
+                    hideModalLoading();
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Failed!',
+                        text: xhr.responseJSON?.message || 'Gagal memuat data',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             });
         }
