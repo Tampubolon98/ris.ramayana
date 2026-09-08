@@ -365,6 +365,30 @@ class MasterEmployeeRepository{
 
     return $query->get();
   }
+
+  public function getRehire($params)
+  {
+    $sql = $this->connRis->table('master_employee_spg as a')
+            ->select('a.*')
+            ->where('no_ktp', $params->no_ktp)
+            ->distinct();
+
+    return $sql->get();
+  }
+
+  public function get_category($category) {
+    $data = $this->connRis->table('master_employee_spg')
+                  ->where('kategori_karyawan', $category)
+                  ->orderBy('id_employee', 'desc')
+                  ->first();
+    return $data;
+  }
+
+  public function addRehire($insertData) {
+    $query = $this->connRis->table('master_employee_spg')
+                  ->insert($insertData);
+    return $query;
+  }
 }
 
 ?>

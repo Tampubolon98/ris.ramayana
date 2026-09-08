@@ -78,6 +78,23 @@ class MasterEmployeeController extends Controller {
   public function indexRehire() {
     return view('employees.indexRehireEmployee');
   }
+
+  public function getRehire(Request $params)
+  {
+    $no_ktp = (object) [
+        'no_ktp' => $params->no_ktp
+    ];
+    
+    $data = $this->masterEmployeeService->getRehire($no_ktp);
+    return response()->json($data);
+  }
+
+  public function tambahRehire(Request $params)
+  {
+    $result = $this->masterEmployeeService->tambahRehire($params);
+    return $result;
+  }
+
   public function indexTerminate() {
     return view('employees.indexTerminateEmployee');
   }

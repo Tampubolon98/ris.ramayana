@@ -712,9 +712,67 @@ class MasterEmployeeService{
       ], 500);
     }
   }
-
   public function validate_user($params) {
     return $this->masterEmployeeRepository->validate_user($params);
+  }
+  public function getRehire($params)
+  {
+    try {
+      $result = $this->masterEmployeeRepository->getRehire($params);
+      return $result;
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function tambahRehire($params)
+  {
+    try {
+      $category = $params->category;
+      $data = $this->masterEmployeeRepository->get_category($category);
+
+      if($category === 'SPG') {
+          $id_employee = $data->id_employee == '' ? '9000000' + 1 : $data->id_employee + 1;
+      } else {
+          $id_employee = $data->id_employee == '' ? '8000000' + 1 : $data->id_employee + 1;
+      }
+
+      $insertData = [
+          'user_create' => Auth::user()->username ?? 'SYSTEM',
+          'date_create' => now(),
+          'status_aktif' => '0',
+          'nama' => $params->name,
+          'alamat' => $params->address,
+          'tanggal_lahir' => Carbon::createFromFormat('d-m-Y', $params->birthday)->format('Y-m-d'),
+          'kode_toko' => $params->store,
+          'no_handphone' => $params->noHandphone,
+          'tanggal_masuk' => Carbon::createFromFormat('d-m-Y', $params->joinDate)->format('Y-m-d'),
+          'no_kk' => $params->kk,
+          'no_ktp' => $params->ktp,
+          'jenis_kelamin' => $params->gender,
+          'status' => $params->status,
+          'md_emp' => $params->md,
+          'brand_emp' => $params->detail_brand,
+          'supplier' => $params->nama_supplier,
+          'id_employee' => $id_employee,
+          'kategori_karyawan' => $params->category
+      ];
+
+      $query = $this->masterEmployeeRepository->addRehire($insertData);
+
+      return response()->json([
+          "success" =>true,
+          "data" => $query
+      ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal menambah data: ' . $e->getMessage()
+        ], 500);
+    }
   }
 }
 ?>

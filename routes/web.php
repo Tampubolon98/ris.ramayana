@@ -49,6 +49,10 @@ Route::get('/master-employee.search', 'Employees\MasterEmployeeController@get_se
 // rehire employee
 Route::get('/rehire-employee.index', 'Employees\MasterEmployeeController@indexRehire')->name('rehire-employee.index');
 
+Route::get('rehire-employee.get', 'Employees\MasterEmployeeController@getRehire')->name('rehire-employee.get');
+
+Route::post('rehire-employee.tambah', 'Employees\MasterEmployeeController@tambahRehire')->name('rehire-employee.tambah');
+
 // terminate employee
 Route::get('/terminate-employee.index', 'Employees\MasterEmployeeController@indexTerminate')->name('terminate-employee.index');
 
