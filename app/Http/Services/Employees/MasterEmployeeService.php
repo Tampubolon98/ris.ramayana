@@ -774,5 +774,18 @@ class MasterEmployeeService{
         ], 500);
     }
   }
+
+  public function get_list_terminate()
+  {
+    try {
+      $result = $this->masterEmployeeRepository->get_list_terminate();
+      return $result;
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
 }
 ?>

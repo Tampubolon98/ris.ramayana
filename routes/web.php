@@ -56,6 +56,8 @@ Route::post('rehire-employee.tambah', 'Employees\MasterEmployeeController@tambah
 // terminate employee
 Route::get('/terminate-employee.index', 'Employees\MasterEmployeeController@indexTerminate')->name('terminate-employee.index');
 
+Route::get('terminate-employee.get', 'Employees\MasterEmployeeController@get_list_terminate')->name('terminate-employee.get');
+
 // Report SPG
 Route::get('/report-spg.index', 'Employees\MasterEmployeeController@indexReportSPG')->name('report-spg.index');
 
