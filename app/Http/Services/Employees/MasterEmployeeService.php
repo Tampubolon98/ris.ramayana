@@ -10,10 +10,11 @@ use Excel;
 use Carbon\Carbon;
 use App\Http\Repositories\Employees\MasterEmployeeRepository;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use App\Exports\ExportReportEmployeeSPG;
+use PDF;
 
 class MasterEmployeeService{
   private $masterEmployeeRepository;
-
   public function __construct(MasterEmployeeRepository $masterEmployeeRepository)
   {
     $this->masterEmployeeRepository = $masterEmployeeRepository;
@@ -693,7 +694,6 @@ class MasterEmployeeService{
         ], 500);
     }
   }
-
   public function get_search_data($params)
   {
     try {
@@ -727,7 +727,6 @@ class MasterEmployeeService{
       ], 500);
     }
   }
-
   public function tambahRehire($params)
   {
     try {
@@ -774,7 +773,6 @@ class MasterEmployeeService{
         ], 500);
     }
   }
-
   public function get_list_terminate()
   {
     try {
@@ -784,6 +782,40 @@ class MasterEmployeeService{
       return response()->json([
         "status" => false,
         "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function downloadPDF($params)
+  {
+    try {
+      $datapdf = $this->masterEmployeeRepository->downloadPDF($params);
+      $filename = 'Report_Employee_SPG_' . UtilHelper::getRandomStr();
+      $pdf = PDF::loadView('Employees/reportEmployeeSPG', compact('datapdf'));
+      $pdf->setOptions(['isPhpEnabled' => true]);
+      $pdf->setPaper('A4', 'landscape');
+
+      return $pdf->download($filename . '.pdf');
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal memproses download: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function downloadXLS($params)
+  {
+    try {
+      $data = $this->masterEmployeeRepository->downloadXLS($params);
+
+      return Excel::download(
+        new ExportReportEmployeeSPG($data), 'Report_Karyawan_SPG.xlsx'
+      );
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal memproses download: " . $e->getMessage()
       ], 500);
     }
   }

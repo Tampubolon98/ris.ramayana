@@ -417,6 +417,50 @@ class MasterEmployeeRepository{
 
     return $employees;
   }
+
+  public function downloadPDF($params)
+  {
+    $kode_toko = $params['kode_toko'];
+    $kategori = $params['kategori_karyawan'];
+
+    $query = $this->connRis->table('master_employee_spg as a')
+                ->select('a.*')
+                ->whereIn('a.kategori_karyawan', ['SPG', 'PKL'])
+                ->orderBy('a.id_employee', 'desc');
+
+    // Jika kategori bukan ALL, filter berdasarkan kategori
+    if ($kategori !== 'ALL') {
+        $query->where('a.kategori_karyawan', $kategori);
+    }
+
+    if ($kode_toko !== 'ALL') {
+        $query->where('a.kode_toko', $kode_toko);
+    }
+
+    return $query->get();
+  }
+
+  public function downloadXLS($params)
+  {
+    $kode_toko = $params['kode_toko'];
+    $kategori = $params['kategori_karyawan'];
+
+    $query = $this->connRis->table('master_employee_spg as a')
+                ->select('a.*')
+                ->whereIn('a.kategori_karyawan', ['SPG', 'PKL'])
+                ->orderBy('a.id_employee', 'desc');
+
+    // Jika kategori bukan ALL, filter berdasarkan kategori
+    if ($kategori !== 'ALL') {
+        $query->where('a.kategori_karyawan', $kategori);
+    }
+
+    if ($kode_toko !== 'ALL') {
+        $query->where('a.kode_toko', $kode_toko);
+    }
+
+    return $query->get();
+  }
 }
 
 ?>

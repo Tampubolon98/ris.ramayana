@@ -61,6 +61,11 @@ Route::get('terminate-employee.get', 'Employees\MasterEmployeeController@get_lis
 // Report SPG
 Route::get('/report-spg.index', 'Employees\MasterEmployeeController@indexReportSPG')->name('report-spg.index');
 
+Route::get('/report-employee.pdf', 'Employees\MasterEmployeeController@downloadPDF')->name('/report-employee.pdf');
+
+Route::get('/report-employee.xls', 'Employees\MasterEmployeeController@downloadXLS')->name('/report-employee.xls');
+
+
 // master brand
 Route::get('/master-brand.index', 'Employees\MasterEmployeeController@indexBrand')->name('master-brand.index');
 
