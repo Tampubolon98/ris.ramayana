@@ -108,6 +108,19 @@ class MasterEmployeeController extends Controller {
   public function indexReportSPG() {
     return view('employees.indexReportEmployeeSPG');
   }
+
+  public function downloadPDF(Request $params)
+  {
+    $result = $this->masterEmployeeService->downloadPDF($params);
+    return $result;
+  }
+
+  public function downloadXLS(Request $params)
+  {
+    $result = $this->masterEmployeeService->downloadXLS($params);
+    return $result;
+  }
+
   public function indexBrand() {
     return view('employees.indexMasterBrand');
   }
