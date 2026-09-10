@@ -124,10 +124,23 @@ class MasterEmployeeController extends Controller {
   public function indexBrand() {
     return view('employees.indexMasterBrand');
   }
+
+  public function getData()
+  {
+    $result = $this->masterEmployeeService->getBrand();
+    return $result;
+  }
+
   public function tambahDataBrand(Request $params){
     $result = $this->masterEmployeeService->tambahDataBrand($params);
     return $result;
   }
+
+  public function editDataBrand(Request $params)
+  {
+    return $this->masterEmployeeService->editDataBrand($params);
+  }
+
   public function getDataBrand(){
     $result = $this->masterEmployeeService->getDataBrand();
     return $result;
@@ -135,6 +148,13 @@ class MasterEmployeeController extends Controller {
   public function indexReportCV() {
     return view('employees.indexReportEmployeeCV');
   }
+
+  public function downloadPDFCV(Request $params)
+  {
+    $result = $this->masterEmployeeService->downloadPDFCV($params);
+    return $result;
+  }
+
   public function indexMutasi() {
     return view('employees.indexMutasiEmployee');
   }

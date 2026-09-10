@@ -23,7 +23,7 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <button class="btn btn-danger btn-m" onclick=""><i class="fas fa-file-pdf"></i>&nbsp; Export PDF</button>
+                        <button class="btn btn-danger btn-m" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i>&nbsp; Export PDF</button>
                       </div>
                     </div>
                 </div>
@@ -36,5 +36,56 @@
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+    <script>
+      function downloadPDF() 
+      {
+        var params = {}
+        var id_employee = $('#idEmployee').val();
+
+        params.id_employee = id_employee;
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'get',
+            url: "{{ route('/report-employee.pdf-cv') }}",
+            data: params,
+            xhrFields: {
+                responseType: 'blob'
+            },
+            beforeSend: function() {
+                showModalLoading();
+            },
+            success: function(data) {
+                var currentDate = new Date();
+                let day = String(currentDate.getDate()).padStart(2, '0');
+                let month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                let year = currentDate.getFullYear();
+                let date = `${day}${month}${year}`;
+                var filename = 'Report_CV_' + date + '.pdf';
+                
+                var blobUrl = URL.createObjectURL(data);
+                
+                var link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            },
+            complete: function() {
+                hideModalLoading();
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    title: 'Failed!',
+                    text: xhr.responseJSON.message || 'Gagal memuat data',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+      }
+    </script>
 @stop

@@ -791,7 +791,7 @@ class MasterEmployeeService{
     try {
       $datapdf = $this->masterEmployeeRepository->downloadPDF($params);
       $filename = 'Report_Employee_SPG_' . UtilHelper::getRandomStr();
-      $pdf = PDF::loadView('Employees/reportEmployeeSPG', compact('datapdf'));
+      $pdf = PDF::loadView('employees/reportEmployeeSPG', compact('datapdf'));
       $pdf->setOptions(['isPhpEnabled' => true]);
       $pdf->setPaper('A4', 'landscape');
 
@@ -817,6 +817,65 @@ class MasterEmployeeService{
         "status" => false,
         "message" => "Gagal memproses download: " . $e->getMessage()
       ], 500);
+    }
+  }
+
+  public function downloadPDFCV($params)
+  {
+    try {
+      $datapdf = $this->masterEmployeeRepository->downloadPDFCV($params);
+      $filename = 'Report_CV';
+      $pdf = PDF::loadView('employees/reportEmployeeCV', compact('datapdf'));
+      $pdf->setOptions([
+          'isPhpEnabled' => true,
+          'isRemoteEnabled' => true
+      ]);
+      $pdf->setPaper('A4', 'potrait');
+
+      return $pdf->download($filename . '.pdf');
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal memproses download: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function getBrand()
+  {
+    try {
+      return $this->masterEmployeeRepository->getBrand();
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function editDataBrand($params)
+  {
+    try {
+        $id_brand = $params->idbrand;
+        $dataArray = [
+            'md' => $params->md,
+            'detail_brand' => $params->brand,
+            'nama_supplier' => $params->supplier,
+            'user_modified' => Auth::user()->username ?? 'SYSTEM',
+            'date_modified' => now(),
+        ];
+
+        $this->masterEmployeeRepository->editDataBrand($id_brand, $dataArray);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil diperbaharui'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal memperbarui data: ' . $e->getMessage()
+        ], 500);
     }
   }
 }

@@ -65,12 +65,20 @@ Route::get('/report-employee.pdf', 'Employees\MasterEmployeeController@downloadP
 
 Route::get('/report-employee.xls', 'Employees\MasterEmployeeController@downloadXLS')->name('/report-employee.xls');
 
-
 // master brand
 Route::get('/master-brand.index', 'Employees\MasterEmployeeController@indexBrand')->name('master-brand.index');
 
+Route::get('/master-brand.get-data', 'Employees\MasterEmployeeController@getData')->name('/master-brand.get-data');
+
+Route::post('/master-brand.tambah', 'Employees\MasterEmployeeController@tambahDataBrand')->name('/master-brand.tambah');
+
+Route::post('/master-brand.edit', 'Employees\MasterEmployeeController@editDataBrand')->name('/master-brand.edit');
+
+
 // Report CV
 Route::get('/report-cv.index', 'Employees\MasterEmployeeController@indexReportCV')->name('report-cv.index');
+
+Route::get('/report-employee.pdf-cv', 'Employees\MasterEmployeeController@downloadPDFCV')->name('/report-employee.pdf-cv');
 
 // mutasi employee
 Route::get('/mutasi-employee.index', 'Employees\MasterEmployeeController@indexMutasi')->name('mutasi-employee.index');
