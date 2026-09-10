@@ -191,14 +191,14 @@ class MasterEmployeeRepository{
 
   public function editDataEmp($id_employee, $dataArray)
   {
-    $this->connRis->table('master_employee_spg')
+    return $this->connRis->table('master_employee_spg')
           ->where('id_employee', $id_employee)
           ->update($dataArray);
   }
 
   public function editDataMutasi($id_employee, $kode_toko, $updateData)
   {
-    $this->connRis->table('mutasi_emp as a')
+    return $this->connRis->table('mutasi_emp as a')
                   ->where('a.id_employee', $id_employee)
                   ->where('a.kode_toko', $kode_toko)
                   ->update($updateData);
@@ -460,6 +460,35 @@ class MasterEmployeeRepository{
     }
 
     return $query->get();
+  }
+
+  public function downloadPDFCV($params)
+  {
+    $id_employee = $params['id_employee'];
+
+    $query = $this->connRis->table('master_employee_spg as a')
+                ->select('a.*')
+                ->where('a.id_employee', $id_employee)
+                ->whereIn('a.kategori_karyawan', ['SPG', 'PKL'])
+                ->orderBy('a.id_employee', 'desc');
+
+    return $query->get();
+  }
+
+  public function getBrand() {
+    $query = $this->connRis->table('master_brand_emp as a')
+        ->select('a.*')
+        ->orderBy('a.id_brand_emp', 'desc')
+        ->distinct()
+        ->get();
+
+    return $query;
+  }
+
+  public function editDataBrand($id_brand, $dataArray) {
+    return $this->connRis->table('master_brand_emp')
+        ->where('id_brand_emp', $id_brand)
+        ->update($dataArray);
   }
 }
 
