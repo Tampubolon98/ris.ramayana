@@ -878,5 +878,84 @@ class MasterEmployeeService{
         ], 500);
     }
   }
+
+  public function get_mutasi_tbl() {
+    try {
+      return $this->masterEmployeeRepository->get_mutasi_tbl();
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan dat: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function get_mutasi($params)
+  {
+    try {
+      $id_employee = (object) [
+        'id_employee' => $params->id_employee
+      ];
+
+      $data = $this->masterEmployeeRepository->get_mutasi($id_employee);
+      return $data;
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function tambah_mutasi($params)
+  {
+      try {
+          $data_emp = $this->masterEmployeeRepository->get_employee($params);
+          $data_mutasi = $this->masterEmployeeRepository->get_data_all($params);
+          $kode_toko = $data_mutasi[0]->kode_toko;
+
+          $insertData = [
+              'user_create' => Auth::user()->username ?? 'SYSTEM',
+              'date_create' => now(),
+              'nama' => $params->name,
+              'tanggal_masuk' => Carbon::createFromFormat('d-m-Y', $params->date)
+              ->addDay()
+              ->format('Y-m-d'),
+              'kategori_karyawan' => $params->category,
+              'kode_toko' => $params->homebase_terminal_id == 'undefined' ? 'RHO' : $params->homebase_terminal_id,
+              'nama_toko' => $params->homebase,
+              'md_emp' => $params->md,
+              'brand_emp' => $params->detail_brand,
+              'supplier' => $params->nama_supplier,
+              'no_kk' => $params->kk,
+              'no_ktp' => $params->ktp,
+              'id_employee' => $params->idemployee
+          ];
+
+          $updateData = [
+              'user_updated' => Auth::user()->username ?? 'SYSTEM',
+              'date_updated' => now(),
+              'tanggal_keluar' => Carbon::createFromFormat('d-m-Y', $params->date)->format('Y-m-d'),
+          ];
+
+          $result = $this->masterEmployeeRepository->tambah_mutasi($insertData);
+
+          if($data_emp[0]->tanggal_keluar === null) {
+              $this->masterEmployeeRepository->edit_employee($updateData, $params->idemployee);
+          } else {
+              $this->masterEmployeeRepository->edit_mutasi($updateData, $kode_toko, $params->idemployee);
+          }
+
+          return response()->json([
+              'success' => true,
+              'message' => $result
+          ]);
+      } catch (\Exception $e) {
+          return response()->json([
+              'success' => false,
+              'message' => 'Gagal memproses data :', $e->getMessage()
+          ], 500);
+      }
+  }
 }
 ?>

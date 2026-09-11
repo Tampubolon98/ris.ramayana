@@ -158,6 +158,21 @@ class MasterEmployeeController extends Controller {
   public function indexMutasi() {
     return view('employees.indexMutasiEmployee');
   }
+
+  public function get_mutasi_tbl()
+  {
+    return $this->masterEmployeeService->get_mutasi_tbl();
+  }
+
+  public function get_mutasi(Request $params)
+  {
+    return $this->masterEmployeeService->get_mutasi($params);
+  }
+
+    public function tambah_mutasi(Request $params)
+    {
+      return $this->masterEmployeeService->tambah_mutasi($params);
+    }
 }
 
 ?>
