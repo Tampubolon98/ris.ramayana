@@ -82,6 +82,13 @@ Route::get('/report-employee.pdf-cv', 'Employees\MasterEmployeeController@downlo
 
 // mutasi employee
 Route::get('/mutasi-employee.index', 'Employees\MasterEmployeeController@indexMutasi')->name('mutasi-employee.index');
+
+Route::get('/mutasi-employee.get-mutasi', 'Employees\MasterEmployeeController@get_mutasi_tbl')->name('/mutasi-employee.get-mutasi');
+
+Route::get('/mutasi-employee.get', 'Employees\MasterEmployeeController@get_mutasi')->name('/mutasi-employee.get');
+
+Route::post('/mutasi-employee.tambah', 'Employees\MasterEmployeeController@tambah_mutasi')->name('/mutasi-employee.tambah');
+
 // ===== END EMPLOYEE =====
 
 // ===== START TAX =====
