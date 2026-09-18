@@ -93,7 +93,10 @@ Route::post('/mutasi-employee.tambah', 'Employees\MasterEmployeeController@tamba
 
 // ===== START TAX =====
 // tax bahan
-Route::get('/tax-bahan.index', 'Tax\PajakMasukanController@indexTaxBahan')->name('tax-bahan.index');
+Route::get('/tax-bahan.index', 'Tax\PajakMasukanController@indexTaxBahan')->name('/tax-bahan.index');
+
+Route::post('/search.tax_bahan', 'Tax\PajakMasukanController@searchTaxBahan')->name('/search.tax_bahan');
+
 
 // tax non a/p
 Route::get('/tax-nonap.index', 'Tax\PajakMasukanController@indexTaxNonap')->name('tax-nonap.index');
