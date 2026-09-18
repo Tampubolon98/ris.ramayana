@@ -219,8 +219,8 @@ class MasterEmployeeRepository{
 			"master_store.ms_location_code, " .
 			"master_store.ms_type " .
 			"FROM m_approval_emp " .
-			"LEFT JOIN ntd.departement ON departement.department_code = m_approval_emp.emp_department_id " .
-			"LEFT JOIN ntd.master_store ON master_store.ms_code = m_approval_emp.store_code";
+			"LEFT JOIN departement ON departement.department_code = m_approval_emp.emp_department_id " .
+			"LEFT JOIN master_store ON master_store.ms_code = m_approval_emp.store_code";
 		$where = "";
 
     if (isset($params['emp_department_id'])) {
