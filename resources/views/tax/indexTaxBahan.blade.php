@@ -47,7 +47,7 @@
                             <div class="col-md-12 p-2">
                               <label for="" class="control-label">Input Pajak Detail Bahan</label>
                               <hr style="margin-top:5px; margin-bottom: 15px; border-color: #DC3545;">
-                              <form class="form-horizontal" method="post" action="{{ route('/search.tax_bahan') }}">
+                              <form class="form-horizontal" method="post" action="{{ route('/search.tax-bahan') }}">
                                 {!! csrf_field() !!}
                                 <div class="row">
                                   <div class="form-group col-md-4">
@@ -106,6 +106,7 @@
                                         <?php $no=1; ?>
                                         @foreach ($data as $item)
                                           <tr class="" data-faktur="{{$data['faktur']}}" data-supplier-name="{{ $data['supplier_name'] }}" data-npwp="{{ $data['npwp'] }}" data-count="{{ $data['dpp'] + $data['ppn'] }}" data-kode="{{ $data['kode'] }}" data-usercreate="{{ $data['user_create'] }}" data-usermodified="{{ $data['user_modified'] }}" data-datecreate="{{ $data['date_create'] }}" data-datemodified="{{ $data['date_modified'] }}" data-status="{{ $data['status_ap'] }}" id="input-form">
+                                          <tr class="" data-faktur="{{ $item['faktur'] }}" data-supplier-name="{{ $item['supplier_name'] }}" data-npwp="{{ $item['npwp'] }}" data-count="{{ $item['dpp'] + $item['ppn'] }}" data-kode="{{ $item['kode'] }}" data-usercreate="{{ $item['user_create'] }}" data-usermodified="{{ $item['user_modified'] }}" data-datecreate="{{ $item['date_create'] }}" data-datemodified="{{ $item['date_modified'] }}" data-status="{{ $item['status_ap'] }}" id="input-form">
                                             <td>{{ $no }}</td>
                                             <td align="center">{{ $item['supplier'] }}</td>
                                             <td align="center">{{ $item['ms_pjk'] }}</td>

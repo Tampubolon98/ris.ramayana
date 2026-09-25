@@ -88,11 +88,14 @@ Route::get('/mutasi-employee.index', 'Employees\MasterEmployeeController@indexMu
 // tax bahan
 Route::get('/tax-bahan.index', 'Tax\PajakMasukanController@indexTaxBahan')->name('/tax-bahan.index');
 
-Route::post('/search.tax_bahan', 'Tax\PajakMasukanController@searchTaxBahan')->name('/search.tax_bahan');
+Route::post('/search.tax-bahan', 'Tax\PajakMasukanController@searchTaxBahan')->name('/search.tax-bahan');
 
 
 // tax non a/p
 Route::get('/tax-nonap.index', 'Tax\PajakMasukanController@indexTaxNonap')->name('tax-nonap.index');
+
+Route::post('/search.tax-nonap', 'Tax\PajakMasukanController@searchTaxNonap')->name('/search.tax-nonap');
+
 
 // tax out
 Route::get('/tax-out.index', 'Tax\PajakKeluaranController@indexTaxOut')->name('tax-out.index');
