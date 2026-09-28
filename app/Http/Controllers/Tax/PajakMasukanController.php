@@ -63,6 +63,10 @@ class PajakMasukanController extends Controller {
     return view('tax.indexTaxNonap', compact('arrParams', 'generatedStatusNonap', 'generatedParams', 'arrData'));
   }
 
+  public function getSupplier(Request $params) {
+    return $this->pajakMasukanService->getSupplier($params);
+  }
+
 }
 
 ?>
