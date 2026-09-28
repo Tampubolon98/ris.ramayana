@@ -99,9 +99,11 @@ Route::post('/search.tax-bahan', 'Tax\PajakMasukanController@searchTaxBahan')->n
 
 
 // tax non a/p
-Route::get('/tax-nonap.index', 'Tax\PajakMasukanController@indexTaxNonap')->name('tax-nonap.index');
+Route::get('/tax-nonap.index', 'Tax\PajakMasukanController@indexTaxNonap')->name('/tax-nonap.index');
 
 Route::post('/search.tax-nonap', 'Tax\PajakMasukanController@searchTaxNonap')->name('/search.tax-nonap');
+
+Route::get('/tax-nonap.get-supplier', 'Tax\PajakMasukanController@getSupplier')->name('/tax-nonap.get-supplier');
 
 
 // tax out

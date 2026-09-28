@@ -144,5 +144,23 @@ class PajakMasukanRepository{
 
     return $result;
   }
+
+  public function getSupplier($params) {
+    $searchTerm = strtolower($params->input('searchTerm'));
+
+    $suppliers = $this->connRis->table('supplier as a')
+      ->select('a.supplier_code', 'a.supplier_name')
+      ->where('a.status_supplier', 1)
+      ->when($searchTerm, function ($query) use ($searchTerm) {
+        $query->where(function ($q) use ($searchTerm) {
+          $q->whereRaw('LOWER(a.supplier_code) LIKE ?', ["%{$searchTerm}%"])
+          ->orWhereRaw('LOWER(a.supplier_name) LIKE ?', ["%{$searchTerm}%"]);
+        });
+      })
+      ->distinct()
+      ->get();
+
+    return response()->json($suppliers);
+  }
 }
 ?>

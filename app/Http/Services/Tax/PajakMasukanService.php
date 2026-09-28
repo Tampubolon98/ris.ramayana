@@ -209,5 +209,16 @@ class PajakMasukanService{
       return [];
     }
   }
+
+  public function getSupplier($params) {
+    try {
+      return $this->getSupplier($params);
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
 }
 ?>

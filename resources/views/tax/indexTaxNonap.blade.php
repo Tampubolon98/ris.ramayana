@@ -178,7 +178,7 @@
 
                 <div class="form-group">
                   <label for="" class="required" data-required="true">Supplier</label>
-                  <select name="new-supplier" id="new-supplier" class="form-control form-control-sm select2" style="width: 100%;" autocomplete="off"></select>
+                  <select id="new-supplier" class="form-control form-control-sm select2" style="width: 100%;" autocomplete="off"></select>
                 </div>
 
                 <div class="row">
@@ -187,7 +187,7 @@
                     <div class="input-group input-group-sm date">
                       <input type="text" class="form-control flatpickr-input" id="new-masa" name="new-masa">
                       <div class="input-group-prepend">
-                        <div class="input-group-text" id="pajakdate"><i class="fa fa-calendar"></i></div>
+                        <div class="input-group-text" id="pajakDate"><i class="fa fa-calendar"></i></div>
                       </div>
                     </div>
                   </div>
@@ -204,7 +204,7 @@
                     <div class="input-group input-group-sm date">
                       <input type="text" class="form-control flatpickr-input" id="new-penerimaan" name="new-penerimaan">
                       <div class="input-group-prepend">
-                        <div class="input-group-text" id="datepenerimaan"><i class="fa fa-calendar"></i></div>
+                        <div class="input-group-text" id="datePenerimaan"><i class="fa fa-calendar"></i></div>
                       </div>
                     </div>
                   </div>
@@ -221,7 +221,7 @@
                     <div class="input-group input-group-sm date">
                       <input type="text" class="form-control flatpickr-input" id="new-taxdate" name="new-taxdate">
                       <div class="input-group-prepend">
-                        <div class="input-group-text" id="taxdate"><i class="fa fa-calendar"></i></div>
+                        <div class="input-group-text" id="taxDate"><i class="fa fa-calendar"></i></div>
                       </div>
                     </div>
                   </div>
@@ -531,7 +531,125 @@
 
       document.addEventListener("DOMContentLoaded", function(){
         formatListNumber();
-      })
+      });
+
+      var masaPajak = flatpickr("#new-masa", {
+        dateFormat: "m-Y",
+        plugins: [new monthSelectPlugin({ shorthand: true, dateFormat: "m-Y", altFormat: "F Y" })],
+        allowInput: true,
+        defaultDate: getFormattedMonth()
+      });
+
+      document.getElementById("pajakDate").addEventListener("click", function () {
+        masaPajak.open();
+      });
+
+      var tglPenerimaan = flatpickr("#new-penerimaan", {
+        dateFormat: "d-m-Y",
+        allowInput: true,
+        defaultDate: getFormattedDate()
+      });
+
+      document.getElementById("datePenerimaan").addEventListener("click", function () {
+        tglPenerimaan.open();
+      });
+
+      var taxDate = flatpickr("#new-taxdate", {
+        dateFormat: "d-m-Y",
+        allowInput: true,
+        defaultDate: getFormattedDate()
+      });
+
+      document.getElementById("taxDate").addEventListener("click", function () {
+        taxDate.open();
+      });
+
+      $(document).ready(function () {
+        $('#new-supplier').select2({
+          placeholder: 'Select an item',
+          ajax: {
+            url: "{{ route('/tax-nonap.get-supplier') }}",
+            dataType: 'json',
+            delay: 250,
+            data: function (data) {
+              return {
+                searchTerm: data.term // search term
+              };
+            },
+            processResults: function (response) {
+              var lov = [];
+              var data_lov = {};
+              data_lov.id = '0';
+              data_lov.text = 'Select an Item';
+              lov.push(data_lov);
+  
+              for(var i=0; i<response.length; i++) {
+                data_lov = {};
+                data_lov.id = response[i].supplier_code;
+                data_lov.text = response[i].supplier_code + " - " + response[i].supplier_name;
+  
+                lov.push(data_lov);
+              }
+              
+              return {
+                results: lov
+              };
+            },
+            cache: true
+          }
+        });
+      });
+
+
+      function openModal(mode, row = null) {
+        if (mode === 'add') {
+          $('#modal-add').attr('data-mode', 'add'); // Set mode ke add
+          $('#modal-title').text('Tambah Data Non A/P');
+
+          $('#modal-add').find('label').each(function () {
+            if ($(this).attr('data-required') === 'true') {
+                $(this).addClass('required');
+            }
+          });
+
+          // Kosongkan input form
+          $('#editFaktur').val('');
+          $('#new-supplier').val(null).trigger('change');
+          $('#newFaktur').val('').prop('disabled', false);
+          $('#saveButton').attr('onclick', 'saveNewRow()'); 
+
+          taxDate.setDate(getFormattedDate(), true);
+          tglPenerimaan.setDate(getFormattedDate(), true);
+          masaPajak.setDate(getFormattedMonth(), true);
+
+          // Tampilkan semua field
+          $('.form-group').show();
+        } else if (mode === 'edit' && row) {
+          $('#modal-add').attr('data-mode', 'edit'); // Set mode ke edit
+          $('#modal-title').text('Edit Data Non A/P');
+          
+          // Setel nilai input dari row yang dipilih
+          $('#editFaktur').val($(row).data('faktur'));
+          $('#new-penerimaan').val($(row).data('tglpenerimaan'));
+          $('#newFaktur').val($(row).data('faktur')).prop('disabled', true);
+          $('#newNPWP').val($(row).data('npwp'));
+          $('#newTaxDate').val($(row).data('taxdate'));
+          $('#newTaxSeries').val($(row).data('taxseries'));
+          $('#newDPP').val(formatRibuan($(row).data('dpp')));
+          $('#newDPPComputed').val(formatRibuan($(row).data('dppcomputed')));
+          $('#newPPN').val(formatRibuan($(row).data('ppn')));
+          $('#newRelease').prop('checked', $(row).data('release') >= 1);
+
+          $('#modal-add').find('.required').removeClass('required');
+
+          // Sembunyikan beberapa field yang tidak perlu di edit
+          $('#new-supplier').closest('.form-group').hide();
+          $('#newMasaPajak').closest('.form-group').hide();
+          $('#newNPWP').closest('.form-group').hide();
+          $('#saveButton').attr('onclick', 'saveEditRow()'); // Ubah tombol Simpan agar panggil fungsi edit
+        }
+        $('#modal-add').modal('show'); // Tampilkan modal
+      }
 
       $(document).ready(function() {
         $('#viewTable').DataTable({
@@ -557,25 +675,6 @@
 
       let arrParams = <?php echo json_encode($arrParams); ?>;
       let generatedParams = <?php echo json_encode($generatedParams); ?>;
-      let arrData = [];
       let arrData = <?php echo json_encode($arrData); ?>;
-
-      function openModal(mode, row=null){
-        if (mode == 'add'){
-          $('#modal-add').attr('data-mode', 'add');
-          $('#modal-title').text('Tambah Data Tax Non A/P');
-          $('.form-group').show();
-        }
-
-        if (mode == 'edit' && row){
-          $('#modal-add').attr('data-mode', 'edit');
-          $('#modal-title').text('Edit Data Tax Non A/P')
-          $('#modal-add').find('.required').removeClass('required');
-          $('#new-supplier').closest('.form-group').hide()
-          $('#new-masa').closest('.form-group').hide()
-          $('#new-npwp').closest('.form-group').hide()
-        }
-        $('#modal-add').modal('show')
-      }
     </script>
 @stop
