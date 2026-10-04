@@ -78,19 +78,69 @@ class MasterEmployeeController extends Controller {
   public function indexRehire() {
     return view('employees.indexRehireEmployee');
   }
+
+  public function getRehire(Request $params)
+  {
+    $no_ktp = (object) [
+        'no_ktp' => $params->no_ktp
+    ];
+    
+    $data = $this->masterEmployeeService->getRehire($no_ktp);
+    return response()->json($data);
+  }
+
+  public function tambahRehire(Request $params)
+  {
+    $result = $this->masterEmployeeService->tambahRehire($params);
+    return $result;
+  }
+
   public function indexTerminate() {
     return view('employees.indexTerminateEmployee');
   }
+
+  public function get_list_terminate()
+  {
+      $result = $this->masterEmployeeService->get_list_terminate();
+      return $result;
+  }
+
   public function indexReportSPG() {
     return view('employees.indexReportEmployeeSPG');
   }
+
+  public function downloadPDF(Request $params)
+  {
+    $result = $this->masterEmployeeService->downloadPDF($params);
+    return $result;
+  }
+
+  public function downloadXLS(Request $params)
+  {
+    $result = $this->masterEmployeeService->downloadXLS($params);
+    return $result;
+  }
+
   public function indexBrand() {
     return view('employees.indexMasterBrand');
   }
+
+  public function getData()
+  {
+    $result = $this->masterEmployeeService->getBrand();
+    return $result;
+  }
+
   public function tambahDataBrand(Request $params){
     $result = $this->masterEmployeeService->tambahDataBrand($params);
     return $result;
   }
+
+  public function editDataBrand(Request $params)
+  {
+    return $this->masterEmployeeService->editDataBrand($params);
+  }
+
   public function getDataBrand(){
     $result = $this->masterEmployeeService->getDataBrand();
     return $result;
@@ -98,9 +148,31 @@ class MasterEmployeeController extends Controller {
   public function indexReportCV() {
     return view('employees.indexReportEmployeeCV');
   }
+
+  public function downloadPDFCV(Request $params)
+  {
+    $result = $this->masterEmployeeService->downloadPDFCV($params);
+    return $result;
+  }
+
   public function indexMutasi() {
     return view('employees.indexMutasiEmployee');
   }
+
+  public function get_mutasi_tbl()
+  {
+    return $this->masterEmployeeService->get_mutasi_tbl();
+  }
+
+  public function get_mutasi(Request $params)
+  {
+    return $this->masterEmployeeService->get_mutasi($params);
+  }
+
+    public function tambah_mutasi(Request $params)
+    {
+      return $this->masterEmployeeService->tambah_mutasi($params);
+    }
 }
 
 ?>

@@ -3,6 +3,8 @@
 @section('title', 'Transaksi Member')
 
 @section('content_header')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -251,5 +253,112 @@
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#date_range_member').daterangepicker({
+                timePicker: false,
+                startDate: moment().startOf('hour').add(-1, 'month'),
+                endDate: moment().startOf('hour'),
+                locale: { format: 'DD/MM/YYYY' }
+            });
+
+            var columnDefs =  [
+                {
+                    "visible": false,
+                    "targets": 0,
+                    "searchable": false
+                },
+            ];
+
+            var table = $('#list_table').DataTable({
+                "processing":     true,
+                "serverSide":     true,
+                "deferRender":    true,
+                "Filter":         false,
+                "bDestroy":       true,
+                "Info":           false,
+                "dom":            'lBfrtip',
+                "searching":      false,
+                "bFilter":        false,
+                "order":          [[0, 'desc']],
+                "columnDefs":     columnDefs,
+                "lengthMenu":     [[ 5, 10, 25, 50, 100 , 250 , 500 ], [5, 10, 25, 50, 100 , 250 , 500 ]],
+                "ajax": 
+                {
+                    url: "{{url('/')}}/list-transaksi-member.list",
+                    type: "get",  // method  , by default get
+                    data: function(d) {
+                    d.status=$('#status').val();
+                    var dateRange = $('#date_range_member').val();
+                    if (dateRange && dateRange.includes(' - ')) {
+                        var dates = dateRange.split(' - ');
+                        d.startDate = dateformat_global(dates[0]);
+                        d.endDate = dateformat_global(dates[1]);
+                    } else {
+                        // Default value jika belum ada
+                        d.startDate = dateformat_global(moment().startOf('hour').add(-1, 'month').format('DD/MM/YYYY'));
+                        d.endDate = dateformat_global(moment().startOf('hour').format('DD/MM/YYYY'));
+                    }
+                    },
+                    error: function(){  // error handling
+
+                    }
+                },
+                "columns": [
+                    { "data": "tgl_struk" , className: 'text-center' },
+                    { "data": "po_no" , className: 'text-center', render: function ( data, type, row )
+                    {
+                        let tanggal = moment(row.Tgl_rcv).format('YYYY-MM');
+                        return '<center><a href="" class="view" data-pono="'+row.po_no+'" data-invoiceno="'+row.invoice_no+'" data-periode="'+tanggal+'" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#modal-view">'+row.po_no+' </a> </center>';
+                    } 
+
+                    },
+                    { "data": "invoice_no" , className: 'text-center' },
+                    { "data": "no_rcv" , className: 'text-center' },
+                    { "data": "Tgl_rcv"  , className: 'text-center'},
+                    { "data": "receiving" , className: 'text-right' , render: function ( data, type, row )
+                    {
+                        return formatNumber(Math.round(row.receiving));
+                    }
+                    },
+                    { "data": "struk" , className: 'text-right' , render: function ( data, type, row )
+                    {
+                        return formatNumber(Math.round(row.struk));
+                    }
+                    },
+                    { "data": "petty_cash"  , className: 'text-right', render: function(data, type, row) {
+                    return formatNumber(Math.round(row.petty_cash));
+                    }},
+                    { "data": "status", className: 'text-center', render: function ( data, type, row ) 
+                    {
+                        if(data=='MATCH')
+                        {
+                        return '<span class="badge badge-primary">MATCH</span>';
+                        }
+                        if (data=='UNMATCH')
+                        {
+                        return '<span class="badge badge-danger">UNMATCH</span>';
+                        }
+                        if (data=='WAITING PAID')
+                        {
+                        return '<span class="badge badge-warning">WAITING PAID</span>'
+                        }
+                    }
+                    },
+                ],
+            });
+
+            $("#btnSearch").click(function (event) 
+            { 
+                event.preventDefault();
+                table.ajax.reload();
+            });
+        });
+    </script>
 @stop

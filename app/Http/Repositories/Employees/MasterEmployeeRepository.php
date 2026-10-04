@@ -191,14 +191,14 @@ class MasterEmployeeRepository{
 
   public function editDataEmp($id_employee, $dataArray)
   {
-    $this->connRis->table('master_employee_spg')
+    return $this->connRis->table('master_employee_spg')
           ->where('id_employee', $id_employee)
           ->update($dataArray);
   }
 
   public function editDataMutasi($id_employee, $kode_toko, $updateData)
   {
-    $this->connRis->table('mutasi_emp as a')
+    return $this->connRis->table('mutasi_emp as a')
                   ->where('a.id_employee', $id_employee)
                   ->where('a.kode_toko', $kode_toko)
                   ->update($updateData);
@@ -219,8 +219,8 @@ class MasterEmployeeRepository{
 			"master_store.ms_location_code, " .
 			"master_store.ms_type " .
 			"FROM m_approval_emp " .
-			"LEFT JOIN ntd.departement ON departement.department_code = m_approval_emp.emp_department_id " .
-			"LEFT JOIN ntd.master_store ON master_store.ms_code = m_approval_emp.store_code";
+			"LEFT JOIN departement ON departement.department_code = m_approval_emp.emp_department_id " .
+			"LEFT JOIN master_store ON master_store.ms_code = m_approval_emp.store_code";
 		$where = "";
 
     if (isset($params['emp_department_id'])) {
@@ -364,6 +364,242 @@ class MasterEmployeeRepository{
     // }
 
     return $query->get();
+  }
+
+  public function getRehire($params)
+  {
+    $sql = $this->connRis->table('master_employee_spg as a')
+            ->select('a.*')
+            ->where('no_ktp', $params->no_ktp)
+            ->distinct();
+
+    return $sql->get();
+  }
+
+  public function get_category($category) {
+    $data = $this->connRis->table('master_employee_spg')
+                  ->where('kategori_karyawan', $category)
+                  ->orderBy('id_employee', 'desc')
+                  ->first();
+    return $data;
+  }
+
+  public function addRehire($insertData) {
+    $query = $this->connRis->table('master_employee_spg')
+                  ->insert($insertData);
+    return $query;
+  }
+
+  public function get_list_terminate()
+  {
+    $employees = $this->connRis->table('master_employee_spg as a')
+                ->select('a.*')
+                ->where('status_aktif', '1')
+                ->orderBy('a.id_employee', 'desc')
+                ->distinct()
+                ->get();
+
+    $toko = $this->connRis->table('p_c_x_homebase_tbl as a')
+            ->select([
+                    DB::raw("substr(a.homebase,5) as homebase"), 
+                    DB::raw("substr(a.homebase,1,4) as homebase_terminal_id")
+                    ])
+            ->distinct()
+            ->get()
+            ->keyBy('homebase_terminal_id');
+
+    // Gabungkan data
+    foreach($employees as $data) {
+        $data->homebase = isset($toko[$data->kode_toko]) 
+            ? $toko[$data->kode_toko]->homebase 
+            : null;
+    }
+
+    return $employees;
+  }
+
+  public function downloadPDF($params)
+  {
+    $kode_toko = $params['kode_toko'];
+    $kategori = $params['kategori_karyawan'];
+
+    $query = $this->connRis->table('master_employee_spg as a')
+                ->select('a.*')
+                ->whereIn('a.kategori_karyawan', ['SPG', 'PKL'])
+                ->orderBy('a.id_employee', 'desc');
+
+    // Jika kategori bukan ALL, filter berdasarkan kategori
+    if ($kategori !== 'ALL') {
+        $query->where('a.kategori_karyawan', $kategori);
+    }
+
+    if ($kode_toko !== 'ALL') {
+        $query->where('a.kode_toko', $kode_toko);
+    }
+
+    return $query->get();
+  }
+
+  public function downloadXLS($params)
+  {
+    $kode_toko = $params['kode_toko'];
+    $kategori = $params['kategori_karyawan'];
+
+    $query = $this->connRis->table('master_employee_spg as a')
+                ->select('a.*')
+                ->whereIn('a.kategori_karyawan', ['SPG', 'PKL'])
+                ->orderBy('a.id_employee', 'desc');
+
+    // Jika kategori bukan ALL, filter berdasarkan kategori
+    if ($kategori !== 'ALL') {
+        $query->where('a.kategori_karyawan', $kategori);
+    }
+
+    if ($kode_toko !== 'ALL') {
+        $query->where('a.kode_toko', $kode_toko);
+    }
+
+    return $query->get();
+  }
+
+  public function downloadPDFCV($params)
+  {
+    $id_employee = $params['id_employee'];
+
+    $query = $this->connRis->table('master_employee_spg as a')
+                ->select('a.*')
+                ->where('a.id_employee', $id_employee)
+                ->whereIn('a.kategori_karyawan', ['SPG', 'PKL'])
+                ->orderBy('a.id_employee', 'desc');
+
+    return $query->get();
+  }
+
+  public function getBrand() {
+    $query = $this->connRis->table('master_brand_emp as a')
+        ->select('a.*')
+        ->orderBy('a.id_brand_emp', 'desc')
+        ->distinct()
+        ->get();
+
+    return $query;
+  }
+
+  public function editDataBrand($id_brand, $dataArray) {
+    return $this->connRis->table('master_brand_emp')
+        ->where('id_brand_emp', $id_brand)
+        ->update($dataArray);
+  }
+
+  public function get_mutasi($params)
+  {
+    $query = $this->connRis->table('master_employee_spg as a')
+        ->select('a.*')
+        ->where('a.id_employee', $params->id_employee)
+        ->whereIn('a.kategori_karyawan', ['SPG', 'PKL'])
+        ->orderBy('a.id_employee', 'desc')
+        ->distinct();
+
+    $employees = $query->get();
+
+    $toko = $this->connRis->table('p_c_x_homebase_tbl as a')
+            ->select([
+                    DB::raw("substr(a.homebase,5) as homebase"), 
+                    DB::raw("substr(a.homebase,1,4) as homebase_terminal_id")
+                    ])
+            ->distinct()
+            ->get()
+            ->keyBy('homebase_terminal_id');
+
+    $mutasi = $this->connRis->table('mutasi_emp as a')
+            ->select('a.kode_toko as store', 'a.tanggal_masuk as join_date', 'a.id_employee', 'a.nama_toko as store_name', 'a.tanggal_keluar as out_date', 'a.md_emp', 'a.brand_emp', 'a.supplier', 'a.no_kk', 'a.no_ktp')
+            ->where('tanggal_keluar', null)
+            ->get()
+            ->keyBy('id_employee');
+
+    foreach($employees as $data) {
+        $data->homebase = isset($toko[$data->kode_toko]) 
+            ? $toko[$data->kode_toko]->homebase 
+            : null;
+
+        $data->store = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->store
+            : null;
+
+        $data->join_date = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->join_date
+            : null;
+
+        $data->store_name = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->store_name
+            : null;
+
+        $data->out_date = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->out_date
+            : null;
+
+        $data->md = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->md_emp
+            : null;
+
+        $data->brand = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->brand_emp
+            : null;
+
+        $data->detail_brand = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->supplier
+            : null;
+
+        $data->kk = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->no_kk
+            : null;
+
+            // dd($data, $mutasi);
+
+        $data->ktp = isset($mutasi[$data->id_employee]) 
+            ? $mutasi[$data->id_employee]->no_ktp
+            : null;
+    }
+
+    return $employees;
+  }
+
+  public function tambah_mutasi($params)
+  {
+    return $this->connRis->table('mutasi_emp')->insert([$params]);
+  }
+
+  public function get_employee($params)
+  {
+    return $this->connRis->table('master_employee_spg as a') 
+        ->select('a.*')
+        ->where('a.id_employee', $params['idemployee'])
+        ->orderBy('a.date_create', 'desc')
+        ->get();
+  }
+
+  public function get_data_all($params)
+  {
+    return $this->connRis->table('mutasi_emp as a')
+                    ->select('a.*')
+                    ->where('a.id_employee', $params['idemployee'])
+                    ->orderBy('a.id_employee', 'desc')
+                    ->get();
+  }
+
+  public function edit_employee(array $params, $idEmployee)
+  {
+    return $this->connRis->table('master_employee_spg as a')
+      ->where('a.id_employee', $idEmployee)
+      ->update($params);
+  }
+
+  public function edit_mutasi(array $params, $kode_toko, $idemployee)
+  {
+    return $this->connRis->table('mutasi_emp as a')
+                    ->where('a.id_employee', $idemployee)
+                    ->where('a.kode_toko', $kode_toko)
+                    ->update($params);
   }
 }
 

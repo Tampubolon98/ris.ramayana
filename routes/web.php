@@ -49,28 +49,62 @@ Route::get('/master-employee.search', 'Employees\MasterEmployeeController@get_se
 // rehire employee
 Route::get('/rehire-employee.index', 'Employees\MasterEmployeeController@indexRehire')->name('rehire-employee.index');
 
+Route::get('rehire-employee.get', 'Employees\MasterEmployeeController@getRehire')->name('rehire-employee.get');
+
+Route::post('rehire-employee.tambah', 'Employees\MasterEmployeeController@tambahRehire')->name('rehire-employee.tambah');
+
 // terminate employee
 Route::get('/terminate-employee.index', 'Employees\MasterEmployeeController@indexTerminate')->name('terminate-employee.index');
+
+Route::get('terminate-employee.get', 'Employees\MasterEmployeeController@get_list_terminate')->name('terminate-employee.get');
 
 // Report SPG
 Route::get('/report-spg.index', 'Employees\MasterEmployeeController@indexReportSPG')->name('report-spg.index');
 
+Route::get('/report-employee.pdf', 'Employees\MasterEmployeeController@downloadPDF')->name('/report-employee.pdf');
+
+Route::get('/report-employee.xls', 'Employees\MasterEmployeeController@downloadXLS')->name('/report-employee.xls');
+
 // master brand
 Route::get('/master-brand.index', 'Employees\MasterEmployeeController@indexBrand')->name('master-brand.index');
+
+Route::get('/master-brand.get-data', 'Employees\MasterEmployeeController@getData')->name('/master-brand.get-data');
+
+Route::post('/master-brand.tambah', 'Employees\MasterEmployeeController@tambahDataBrand')->name('/master-brand.tambah');
+
+Route::post('/master-brand.edit', 'Employees\MasterEmployeeController@editDataBrand')->name('/master-brand.edit');
+
 
 // Report CV
 Route::get('/report-cv.index', 'Employees\MasterEmployeeController@indexReportCV')->name('report-cv.index');
 
+Route::get('/report-employee.pdf-cv', 'Employees\MasterEmployeeController@downloadPDFCV')->name('/report-employee.pdf-cv');
+
 // mutasi employee
 Route::get('/mutasi-employee.index', 'Employees\MasterEmployeeController@indexMutasi')->name('mutasi-employee.index');
+
+Route::get('/mutasi-employee.get-mutasi', 'Employees\MasterEmployeeController@get_mutasi_tbl')->name('/mutasi-employee.get-mutasi');
+
+Route::get('/mutasi-employee.get', 'Employees\MasterEmployeeController@get_mutasi')->name('/mutasi-employee.get');
+
+Route::post('/mutasi-employee.tambah', 'Employees\MasterEmployeeController@tambah_mutasi')->name('/mutasi-employee.tambah');
+
 // ===== END EMPLOYEE =====
 
 // ===== START TAX =====
 // tax bahan
-Route::get('/tax-bahan.index', 'Tax\PajakMasukanController@indexTaxBahan')->name('tax-bahan.index');
+Route::get('/tax-bahan.index', 'Tax\PajakMasukanController@indexTaxBahan')->name('/tax-bahan.index');
+
+Route::post('/search.tax-bahan', 'Tax\PajakMasukanController@searchTaxBahan')->name('/search.tax-bahan');
+
 
 // tax non a/p
-Route::get('/tax-nonap.index', 'Tax\PajakMasukanController@indexTaxNonap')->name('tax-nonap.index');
+Route::get('/tax-nonap.index', 'Tax\PajakMasukanController@indexTaxNonap')->name('/tax-nonap.index');
+
+Route::post('/search.tax-nonap', 'Tax\PajakMasukanController@searchTaxNonap')->name('/search.tax-nonap');
+
+Route::get('/tax-nonap.get-supplier', 'Tax\PajakMasukanController@getSupplier')->name('/tax-nonap.get-supplier');
+
 
 // tax out
 Route::get('/tax-out.index', 'Tax\PajakKeluaranController@indexTaxOut')->name('tax-out.index');

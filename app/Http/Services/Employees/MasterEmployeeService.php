@@ -10,10 +10,11 @@ use Excel;
 use Carbon\Carbon;
 use App\Http\Repositories\Employees\MasterEmployeeRepository;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use App\Exports\ExportReportEmployeeSPG;
+use PDF;
 
 class MasterEmployeeService{
   private $masterEmployeeRepository;
-
   public function __construct(MasterEmployeeRepository $masterEmployeeRepository)
   {
     $this->masterEmployeeRepository = $masterEmployeeRepository;
@@ -693,7 +694,6 @@ class MasterEmployeeService{
         ], 500);
     }
   }
-
   public function get_search_data($params)
   {
     try {
@@ -712,9 +712,250 @@ class MasterEmployeeService{
       ], 500);
     }
   }
-
   public function validate_user($params) {
     return $this->masterEmployeeRepository->validate_user($params);
+  }
+  public function getRehire($params)
+  {
+    try {
+      $result = $this->masterEmployeeRepository->getRehire($params);
+      return $result;
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
+  public function tambahRehire($params)
+  {
+    try {
+      $category = $params->category;
+      $data = $this->masterEmployeeRepository->get_category($category);
+
+      if($category === 'SPG') {
+          $id_employee = $data->id_employee == '' ? '9000000' + 1 : $data->id_employee + 1;
+      } else {
+          $id_employee = $data->id_employee == '' ? '8000000' + 1 : $data->id_employee + 1;
+      }
+
+      $insertData = [
+          'user_create' => Auth::user()->username ?? 'SYSTEM',
+          'date_create' => now(),
+          'status_aktif' => '0',
+          'nama' => $params->name,
+          'alamat' => $params->address,
+          'tanggal_lahir' => Carbon::createFromFormat('d-m-Y', $params->birthday)->format('Y-m-d'),
+          'kode_toko' => $params->store,
+          'no_handphone' => $params->noHandphone,
+          'tanggal_masuk' => Carbon::createFromFormat('d-m-Y', $params->joinDate)->format('Y-m-d'),
+          'no_kk' => $params->kk,
+          'no_ktp' => $params->ktp,
+          'jenis_kelamin' => $params->gender,
+          'status' => $params->status,
+          'md_emp' => $params->md,
+          'brand_emp' => $params->detail_brand,
+          'supplier' => $params->nama_supplier,
+          'id_employee' => $id_employee,
+          'kategori_karyawan' => $params->category
+      ];
+
+      $query = $this->masterEmployeeRepository->addRehire($insertData);
+
+      return response()->json([
+          "success" =>true,
+          "data" => $query
+      ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal menambah data: ' . $e->getMessage()
+        ], 500);
+    }
+  }
+  public function get_list_terminate()
+  {
+    try {
+      $result = $this->masterEmployeeRepository->get_list_terminate();
+      return $result;
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function downloadPDF($params)
+  {
+    try {
+      $datapdf = $this->masterEmployeeRepository->downloadPDF($params);
+      $filename = 'Report_Employee_SPG_' . UtilHelper::getRandomStr();
+      $pdf = PDF::loadView('employees/reportEmployeeSPG', compact('datapdf'));
+      $pdf->setOptions(['isPhpEnabled' => true]);
+      $pdf->setPaper('A4', 'landscape');
+
+      return $pdf->download($filename . '.pdf');
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal memproses download: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function downloadXLS($params)
+  {
+    try {
+      $data = $this->masterEmployeeRepository->downloadXLS($params);
+
+      return Excel::download(
+        new ExportReportEmployeeSPG($data), 'Report_Karyawan_SPG.xlsx'
+      );
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal memproses download: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function downloadPDFCV($params)
+  {
+    try {
+      $datapdf = $this->masterEmployeeRepository->downloadPDFCV($params);
+      $filename = 'Report_CV';
+      $pdf = PDF::loadView('employees/reportEmployeeCV', compact('datapdf'));
+      $pdf->setOptions([
+          'isPhpEnabled' => true,
+          'isRemoteEnabled' => true
+      ]);
+      $pdf->setPaper('A4', 'potrait');
+
+      return $pdf->download($filename . '.pdf');
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal memproses download: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function getBrand()
+  {
+    try {
+      return $this->masterEmployeeRepository->getBrand();
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function editDataBrand($params)
+  {
+    try {
+        $id_brand = $params->idbrand;
+        $dataArray = [
+            'md' => $params->md,
+            'detail_brand' => $params->brand,
+            'nama_supplier' => $params->supplier,
+            'user_modified' => Auth::user()->username ?? 'SYSTEM',
+            'date_modified' => now(),
+        ];
+
+        $this->masterEmployeeRepository->editDataBrand($id_brand, $dataArray);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil diperbaharui'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal memperbarui data: ' . $e->getMessage()
+        ], 500);
+    }
+  }
+
+  public function get_mutasi_tbl() {
+    try {
+      return $this->masterEmployeeRepository->get_mutasi_tbl();
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan dat: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function get_mutasi($params)
+  {
+    try {
+      $id_employee = (object) [
+        'id_employee' => $params->id_employee
+      ];
+
+      $data = $this->masterEmployeeRepository->get_mutasi($id_employee);
+      return $data;
+    } catch (\Exception $e) {
+      return response()->json([
+        "status" => false,
+        "message" => "Gagal mendapatkan data: " . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function tambah_mutasi($params)
+  {
+      try {
+          $data_emp = $this->masterEmployeeRepository->get_employee($params);
+          $data_mutasi = $this->masterEmployeeRepository->get_data_all($params);
+          $kode_toko = $data_mutasi[0]->kode_toko;
+
+          $insertData = [
+              'user_create' => Auth::user()->username ?? 'SYSTEM',
+              'date_create' => now(),
+              'nama' => $params->name,
+              'tanggal_masuk' => Carbon::createFromFormat('d-m-Y', $params->date)
+              ->addDay()
+              ->format('Y-m-d'),
+              'kategori_karyawan' => $params->category,
+              'kode_toko' => $params->homebase_terminal_id == 'undefined' ? 'RHO' : $params->homebase_terminal_id,
+              'nama_toko' => $params->homebase,
+              'md_emp' => $params->md,
+              'brand_emp' => $params->detail_brand,
+              'supplier' => $params->nama_supplier,
+              'no_kk' => $params->kk,
+              'no_ktp' => $params->ktp,
+              'id_employee' => $params->idemployee
+          ];
+
+          $updateData = [
+              'user_updated' => Auth::user()->username ?? 'SYSTEM',
+              'date_updated' => now(),
+              'tanggal_keluar' => Carbon::createFromFormat('d-m-Y', $params->date)->format('Y-m-d'),
+          ];
+
+          $result = $this->masterEmployeeRepository->tambah_mutasi($insertData);
+
+          if($data_emp[0]->tanggal_keluar === null) {
+              $this->masterEmployeeRepository->edit_employee($updateData, $params->idemployee);
+          } else {
+              $this->masterEmployeeRepository->edit_mutasi($updateData, $kode_toko, $params->idemployee);
+          }
+
+          return response()->json([
+              'success' => true,
+              'message' => $result
+          ]);
+      } catch (\Exception $e) {
+          return response()->json([
+              'success' => false,
+              'message' => 'Gagal memproses data :', $e->getMessage()
+          ], 500);
+      }
   }
 }
 ?>
