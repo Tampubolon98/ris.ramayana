@@ -15,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/transaksi-member.index', 'Idcash\IdcashController@indexListTransaksiMember')->name('transaksi-member.index');
 
+Route::get('list-transaksi-member.list',  'Idcash\IdcashController@listTransaksiMember')->name('list-transaksi-member.list');
+
 
