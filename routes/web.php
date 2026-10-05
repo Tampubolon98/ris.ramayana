@@ -108,5 +108,10 @@ Route::get('/tax-nonap.get-supplier', 'Tax\PajakMasukanController@getSupplier')-
 
 // tax out
 Route::get('/tax-out.index', 'Tax\PajakKeluaranController@indexTaxOut')->name('tax-out.index');
+
+Route::get('get.tax_out', 'Tax\PajakKeluaranController@getPajakKeluaran')->name('get.tax_out');
+
+Route::post('save.tax_out', 'Tax\PajakKeluaranController@savePajakKeluaran')->name('save.tax_out');
+
 // ===== END TAX =====
 
