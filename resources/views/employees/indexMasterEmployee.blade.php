@@ -38,7 +38,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group mr-2">
-                                        <button class="btn btn-danger btn-flat btn-sm" onclick="">SEARCH</button>
+                                        <button class="btn btn-danger btn-flat btn-sm" onclick="get_search_data()">SEARCH</button>
                                     </div>
                                 </div>
                             </div>
@@ -368,7 +368,7 @@
                          <div id="previewImage">
                             <img src="" id="oldImagePreview" width="120" height="150" style="border:1px solid #ccc; border-radius:5px; margin-bottom: 5px;" />
                         </div>
-                        <input type="file" class="form-control form-control-sm" id="new-image" name="newImage">
+                        <input type="file" class="form-control form-control-sm" id="new-image" name="new-image">
                     </div>
 
                     <div class="row">
@@ -638,6 +638,16 @@
         document.getElementById('joindate').addEventListener('click', function() {
             tglMasuk.open();
         });
+
+        let tglKeluar = flatpickr("#new-out", {
+            dateFormat: 'd-m-Y',
+            allowInput: true,
+            defaultDate: getFormattedDate()
+        });
+
+        document.getElementById('outDate').addEventListener('click', function() {
+            tglKeluar.open();
+        })
 
         $('#new-category').on('change', function() {
             if ($(this).val() === 'PKL') {
