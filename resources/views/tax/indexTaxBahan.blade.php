@@ -105,7 +105,6 @@
                                       <tbody id="contentReport" style="font-size:12px;">
                                         <?php $no=1; ?>
                                         @foreach ($data as $item)
-                                          <tr class="" data-faktur="{{$data['faktur']}}" data-supplier-name="{{ $data['supplier_name'] }}" data-npwp="{{ $data['npwp'] }}" data-count="{{ $data['dpp'] + $data['ppn'] }}" data-kode="{{ $data['kode'] }}" data-usercreate="{{ $data['user_create'] }}" data-usermodified="{{ $data['user_modified'] }}" data-datecreate="{{ $data['date_create'] }}" data-datemodified="{{ $data['date_modified'] }}" data-status="{{ $data['status_ap'] }}" id="input-form">
                                           <tr class="" data-faktur="{{ $item['faktur'] }}" data-supplier-name="{{ $item['supplier_name'] }}" data-npwp="{{ $item['npwp'] }}" data-count="{{ $item['dpp'] + $item['ppn'] }}" data-kode="{{ $item['kode'] }}" data-usercreate="{{ $item['user_create'] }}" data-usermodified="{{ $item['user_modified'] }}" data-datecreate="{{ $item['date_create'] }}" data-datemodified="{{ $item['date_modified'] }}" data-status="{{ $item['status_ap'] }}" id="input-form">
                                             <td>{{ $no }}</td>
                                             <td align="center">{{ $item['supplier'] }}</td>
@@ -313,7 +312,6 @@
             // Format the last day as "DD-MM-YYYY"
             var lastDayFormatted =
             (lastDay < 10 ? "0" : "") + lastDay + "-"  + parts[1] + "-" + year;
-            console.log('date', lastDayFormatted)
 
             // Set the value of the endDate input field
             $("input[name=endDate]").val(lastDayFormatted);
