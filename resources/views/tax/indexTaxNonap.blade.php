@@ -140,7 +140,7 @@
                                               <input type="checkbox" class="release-checkbox edit-tax" data-field="checkbox" {{ $item['checkbox'] >= 1 ? 'checked' : '' }}>
                                             </td>
                                             <td align="center" class="d-flex gap-2">
-                                              <button type="button" class="btn btn-xs btn-success mr-1 edit-btn" onclick="openModal('edit', this)"><i class="far fa-edit"></i></button>
+                                              <button type="button" class="btn btn-xs btn-success mr-1 edit-btn" onclick="openModal('edit', this)" data-faktur="{{ $item['faktur'] }}" data-taxdate="{{ $item['tax_date'] }}" data-npwp="{{ $item['npwp'] }}" data-dpp="{{ $item['dpp'] }}" data-ppn="{{ $item['ppn'] }}" data-dppcomputed="{{ $item['dpp_nilai_lain'] }}" data-taxseries="{{ $item['tax_series'] }}" data-tglpenerimaan="{{ $item['rcv_date'] }}" data-release="{{ $item['checkbox'] }}"><i class="far fa-edit"></i></button>
                                               <button type="button" class="btn btn-xs btn-danger mr-1 delete-btn"><i class="fas fa-trash"></i></button>
                                             </td>
                                           </tr>
@@ -613,10 +613,11 @@
           });
 
           // Kosongkan input form
-          $('#editFaktur').val('');
+          $('#modal-form')[0].reset();
+          $('#edit-faktur').val('');
           $('#new-supplier').val(null).trigger('change');
-          $('#newFaktur').val('').prop('disabled', false);
-          $('#saveButton').attr('onclick', 'saveNewRow()'); 
+          $('#new-faktur').val('').prop('disabled', false);
+          $('#save-button').attr('onclick', 'saveNewRow()'); 
 
           taxDate.setDate(getFormattedDate(), true);
           tglPenerimaan.setDate(getFormattedDate(), true);
@@ -629,24 +630,24 @@
           $('#modal-title').text('Edit Data Non A/P');
           
           // Setel nilai input dari row yang dipilih
-          $('#editFaktur').val($(row).data('faktur'));
+          $('#edit-faktur').val($(row).data('faktur'));
           $('#new-penerimaan').val($(row).data('tglpenerimaan'));
-          $('#newFaktur').val($(row).data('faktur')).prop('disabled', true);
-          $('#newNPWP').val($(row).data('npwp'));
-          $('#newTaxDate').val($(row).data('taxdate'));
-          $('#newTaxSeries').val($(row).data('taxseries'));
-          $('#newDPP').val(formatRibuan($(row).data('dpp')));
-          $('#newDPPComputed').val(formatRibuan($(row).data('dppcomputed')));
-          $('#newPPN').val(formatRibuan($(row).data('ppn')));
-          $('#newRelease').prop('checked', $(row).data('release') >= 1);
+          $('#new-faktur').val($(row).data('faktur')).prop('disabled', true);
+          $('#new-npwp').val($(row).data('npwp'));
+          $('#new-taxdate').val($(row).data('taxdate'));
+          $('#new-taxseries').val($(row).data('taxseries'));
+          $('#new-dpp').val(formatRibuan($(row).data('dpp')));
+          $('#new-dppcomputed').val(formatRibuan($(row).data('dppcomputed')));
+          $('#new-ppn').val(formatRibuan($(row).data('ppn')));
+          $('#new-release').prop('checked', $(row).data('release') >= 1);
 
           $('#modal-add').find('.required').removeClass('required');
 
           // Sembunyikan beberapa field yang tidak perlu di edit
           $('#new-supplier').closest('.form-group').hide();
-          $('#newMasaPajak').closest('.form-group').hide();
-          $('#newNPWP').closest('.form-group').hide();
-          $('#saveButton').attr('onclick', 'saveEditRow()'); // Ubah tombol Simpan agar panggil fungsi edit
+          $('#new-masa').closest('.form-group').hide();
+          $('#new-npwp').closest('.form-group').hide();
+          $('#save-button').attr('onclick', 'saveEditRow()'); // Ubah tombol Simpan agar panggil fungsi edit
         }
         $('#modal-add').modal('show'); // Tampilkan modal
       }
