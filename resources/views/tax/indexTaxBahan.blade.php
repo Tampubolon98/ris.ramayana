@@ -63,7 +63,7 @@
                                   <div class="form-group col-md-4">
                                     <label for="" class="control-label">Periode Akhir</label>
                                     <div class="input-group date p-1" id="endDate" data-target-input="nearest">
-                                      <input type="text" readonly autocomplete="off" class="form-control form-control-sm" data-target="#endDate" name="endDate" id="endDates" value="{{ $arrParams['endDate'] }}" disabled />
+                                      <input type="text" readonly autocomplete="off" class="form-control form-control-sm" data-target="#endDate" name="endDate" id="endDates" value="{{ $arrParams['endDate'] }}" />
                                       <div class="input-group-append" data-target="#endDate">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                       </div>
