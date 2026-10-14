@@ -109,7 +109,7 @@
                                           <th style="border-left: 1px solid #fff; text-align: center;">Tax Series</th>
                                           <th style="border-left: 1px solid #fff; text-align: center;"><span style="color: grey"></span>Tax Date<span style="color: grey"></span></th>
                                           <th style="border-left: 1px solid #fff; text-align: center;">DPP</th>
-                                          <th style="border-left: 1px solid #DC3545; text-align: center;">DPP Nilai Lain</th>
+                                          <th style="border-left: 1px solid #fff; text-align: center;">DPP Nilai Lain</th>
                                           <th style="border-left: 1px solid #fff; text-align: center;">PPN</th>
                                           <th style="border-left: 1px solid #fff; text-align: center;">Release</th>
                                           <th style="border-left: 1px solid #fff; text-align: center;">Action</th>
