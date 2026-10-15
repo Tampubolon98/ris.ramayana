@@ -149,7 +149,132 @@
                                       </tbody>
                                       <tfoot id="footReport"></tfoot>
                                     </table>
+
+                                    <div>
+                                      <p id="supplier-name-display"><strong></strong></p>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-md-6 col-sm-12 form-group">
+                                        <div class="row g-3 align-items-center">
+                                          <div class="col-auto">
+                                            <label for=""><strong>NPWP:</strong></label>
+                                          </div>
+                                          <div class="col-auto">
+                                            <input type="text" maxlength="16" value="" data-field='npwp' id="npwp" class="form-control" disabled>
+                                          </div>
+                                        </div>
+                                      </div>
+        
+                                      <div class="col-md-6 col-sm-12 form-group d-flex justify-content-end">
+                                        <div class="row g-3 align-items-center">
+                                          <div class="col-auto">
+                                            <label for=""><strong>Total DPP + PPN:</strong></label>
+                                          </div>
+                                          <div class="col-auto">
+                                            <input type="text" id="total-external" maxlength="15" value="" class="form-control" disabled>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-md-3 col-sm-6 form-group">
+                                        <div class="row g-3 align-items-center">
+                                          <div class="col-auto">
+                                            <label for=""><strong>Kode:</strong></label>
+                                          </div>
+                                          <div class="col-auto">
+                                            <input type="text" id="kode" value="" class="form-control ml-2" disabled>
+                                          </div>
+                                        </div>
+                                      </div>
+        
+                                      <div class="col-md-3 col-sm-6 form-group">
+                                        <div class="row g-3 align-items-center">
+                                          <label for=""><strong>User Create:</strong></label>
+                                          <div class="col-auto">
+                                            <input type="text" id="user_create" value="" class="form-control form-control-sm" disabled>
+                                          </div>
+                                        </div>
+                                      </div>
+        
+                                      <div class="col-md-3 col-sm-6 form-group">
+                                        <div class="row g-3 align-items-center">
+                                          <label for=""><strong>User Modified:</strong></label>
+                                          <div class="col-auto">
+                                            <input type="text" id="user_modified" value="" class="form-control form-control-sm" disabled>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="col-md-3 col-sm-6 form-group d-flex justify-content-end">
+                                        <div class="row g-3 align-items-center">
+                                          <label for=""><strong>Status AP:</strong></label>
+                                          <div class="col-auto">
+                                            <input type="text" id="status-ap" value="" class="form-control" disabled>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-md-3 col-sm-6 form-group">
+                                        <div class="row g-3 align-items-center">
+                                          <div class="col-auto">
+                                            <label for=""><strong>Bulan:</strong></label>
+                                          </div>
+                                          <div class="col-auto">
+                                            <input type="text" autocomplete="off" class="form-control datetimepicker-input ml-1" name="month" id="month" disabled/>
+                                          </div>
+                                        </div>
+                                      </div>
+        
+                                      <div class="col-md-3 col-sm-6 form-group">
+                                        <div class="row g-3 align-items-center">
+                                          <label for=""><strong>Date Create:</strong></label>
+                                          <div class="col-auto">
+                                            <input type="text" autocomplete="off" class="form-control form-control-sm datetimepicker-input" name="date_create" id="date_create" disabled/>
+                                          </div>
+                                        </div>
+                                      </div>
+        
+                                      <div class="col-md-3 col-sm-6 form-group">
+                                        <div class="row g-3 align-items-center">
+                                          <label for=""><strong>Date Modified:</strong></label>
+                                          <div class="col-auto">
+                                            <input type="text" autocomplete="off" class="form-control form-control-sm datetimepicker-input" name="date_modified" id="date_modified" disabled/>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="col-md-3 col-sm-6 form-group d-flex justify-content-end">
+                                        @php
+                                          $totalDpp = 0;
+                                          $totalPPn = 0;
+                                          $total= 0;
+                                        @endphp
+        
+                                        @foreach ($arrData as $data)
+                                          @php
+                                            $totalDpp += $data['dpp'];
+                                            $totalPPn += $data['ppn'];
+                                            $total += $data['dpp'] + $data['ppn'];
+                                          @endphp
+                                        @endforeach
+                                        <div class="row g-3 align-items-center">
+                                          <div class="col-auto">
+                                            <label for=""><strong>Count:</strong></label>
+                                          </div>
+                                          <div class="col-auto">
+                                            <input type="text" value="{{ number_format($total, 0, ',', '.') }}" class="form-control" disabled>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
+                                </div>
+                                <div class="card-footer">
                                 </div>
                               </div>
                             </div>
@@ -288,22 +413,22 @@
 
         // Check if startDate is not empty
         if (startDate) {
-            var parts = startDate.split("-");
-            var year = parseInt(parts[2], 10);
-            var month = parseInt(parts[1], 10);
+          var parts = startDate.split("-");
+          var year = parseInt(parts[2], 10);
+          var month = parseInt(parts[1], 10);
 
-            // Create a Date object for the last day of the month
-            var lastDay = new Date(year, month, 0).getDate();
+          // Create a Date object for the last day of the month
+          var lastDay = new Date(year, month, 0).getDate();
 
-            // Format the last day as "DD-MM-YYYY"
-            var lastDayFormatted =
-            (lastDay < 10 ? "0" : "") + lastDay + "-"  + parts[1] + "-" + year;
+          // Format the last day as "DD-MM-YYYY"
+          var lastDayFormatted =
+          (lastDay < 10 ? "0" : "") + lastDay + "-"  + parts[1] + "-" + year;
 
-            // Set the value of the endDate input field
-            $("input[name=endDate]").val(lastDayFormatted);
+          // Set the value of the endDate input field
+          $("input[name=endDate]").val(lastDayFormatted);
 
-            // Optionally, perform additional actions or validations
-            checkValueSearch();
+          // Optionally, perform additional actions or validations
+          checkValueSearch();
         }
       });
 
@@ -335,17 +460,16 @@
         var monthDifference = (endDay.getFullYear() - startDay.getFullYear()) * 12 + (endDay.getMonth() - startDay.getMonth());
 
         if (/* monthDifference > 12 || */ startDay.getFullYear() !== endDay.getFullYear()) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Information!',
-                text: 'Search period Hanya Boleh Dalam Tahun Yang Sama',
-            }).then(function() {
-                $("input[name=endDate]").val("");
-                checkValueSearch();
-                location.reload();
-            });
+          Swal.fire({
+            icon: 'info',
+            title: 'Information!',
+            text: 'Search period Hanya Boleh Dalam Tahun Yang Sama',
+          }).then(function() {
+            $("input[name=endDate]").val("");
+            checkValueSearch();
+            location.reload();
+          });
         }
-
 
         if (countDay < 0) {
           Swal.fire({
@@ -425,10 +549,10 @@
 
         // Pastikan input tidak kosong sebelum validasi
         if (value.trim() === "") {
-            errorMessage.textContent = "";
-            input.classList.remove("is-invalid");
-            disableReleaseCheckbox(faktur, true); // Nonaktifkan release checkbox jika input kosong
-            return;
+          errorMessage.textContent = "";
+          input.classList.remove("is-invalid");
+          disableReleaseCheckbox(faktur, true); // Nonaktifkan release checkbox jika input kosong
+          return;
         }
 
         // Konversi nilai ke float
@@ -436,23 +560,23 @@
 
         // Cegah validasi jika input bukan angka valid
         if (isNaN(ppnInput)) {
-            errorMessage.textContent = "Masukkan angka yang valid!";
-            input.classList.add("is-invalid");
-            disableReleaseCheckbox(faktur, true); // Nonaktifkan release checkbox jika input tidak valid
-            return;
+          errorMessage.textContent = "Masukkan angka yang valid!";
+          input.classList.add("is-invalid");
+          disableReleaseCheckbox(faktur, true); // Nonaktifkan release checkbox jika input tidak valid
+          return;
         }
 
         // Hitung selisih input dengan PPN dari database
         let difference = Math.abs(ppnInput - ppnDatabase);
 
         if (difference >= 100) {
-            errorMessage.textContent = "Nilai PPN tidak boleh lebih dari 100!";
-            input.classList.add("is-invalid");
-            disableReleaseCheckbox(faktur, true); // Nonaktifkan release checkbox jika selisih lebih dari 100
+          errorMessage.textContent = "Nilai PPN tidak boleh lebih dari 100!";
+          input.classList.add("is-invalid");
+          disableReleaseCheckbox(faktur, true); // Nonaktifkan release checkbox jika selisih lebih dari 100
         } else {
-            errorMessage.textContent = "";
-            input.classList.remove("is-invalid");
-            disableReleaseCheckbox(faktur, false); // Mengaktifkan release checkbox jika valid
+          errorMessage.textContent = "";
+          input.classList.remove("is-invalid");
+          disableReleaseCheckbox(faktur, false); // Mengaktifkan release checkbox jika valid
         }
       }
 
@@ -470,18 +594,18 @@
       function checkInputs(row) {
         let allFilled = true;
         row.find(".edit-tax").each(function () {
-            if ($(this).val().trim() === "") {
-                allFilled = false;
-            }
+          if ($(this).val().trim() === "") {
+            allFilled = false;
+          }
         });
 
         let isChecked = row.find(".release-checkbox").is(":checked");
         let npwpFilled = $(".input-npwp").val().trim() !== ""; // Cek jika NPWP terisi
 
         if (allFilled && isChecked && npwpFilled) {
-            row.find(".save-tax").prop("disabled", false); // Aktifkan tombol save
+          row.find(".save-tax").prop("disabled", false); // Aktifkan tombol save
         } else {
-            row.find(".save-tax").prop("disabled", true); // Nonaktifkan tombol save
+          row.find(".save-tax").prop("disabled", true); // Nonaktifkan tombol save
         }
       }
 
@@ -490,16 +614,16 @@
         let formattedValue = '';
 
         if (value.length > 0) {
-            formattedValue = value.substring(0, 3);
+          formattedValue = value.substring(0, 3);
         }
         if (value.length > 3) {
-            formattedValue += '.' + value.substring(3, 6);
+          formattedValue += '.' + value.substring(3, 6);
         }
         if (value.length > 6) {
-            formattedValue += '.' + value.substring(6, 9);
+          formattedValue += '.' + value.substring(6, 9);
         }
         if (value.length > 9) {
-            formattedValue += '.' + value.substring(9, 17); // Batasi maksimal 17 digit tanpa titik
+          formattedValue += '.' + value.substring(9, 17); // Batasi maksimal 17 digit tanpa titik
         }
 
         input.value = formattedValue;
@@ -600,7 +724,6 @@
         });
       });
 
-
       function openModal(mode, row = null) {
         if (mode === 'add') {
           $('#modal-add').attr('data-mode', 'add'); // Set mode ke add
@@ -608,7 +731,7 @@
 
           $('#modal-add').find('label').each(function () {
             if ($(this).attr('data-required') === 'true') {
-                $(this).addClass('required');
+              $(this).addClass('required');
             }
           });
 
@@ -672,6 +795,114 @@
         });
 
         $('[data-toggle="tooltip"]').tooltip();
+      });
+
+      document.querySelectorAll("#newFaktur").forEach(function(input) {
+        input.addEventListener("input", function() {
+          this.value = this.value.toUpperCase();
+        });
+      });
+
+      const inputs = document.querySelectorAll('#input-form input');
+
+      inputs.forEach((input, index) => {
+        input.addEventListener('input', () => {
+          // Pindah ke input berikutnya jika panjang maksimum tercapai
+          if (input.value.length >= input.maxLength || input.type === 'date') {
+            const nextInput = inputs[index + 1];
+            if (nextInput) {
+              nextInput.focus();
+            }
+          }
+        });
+
+        // Otomatis pindah saat tanggal dipilih
+        if (input.type === 'date') {
+          input.addEventListener('change', () => {
+            const nextInput = inputs[index + 1];
+            if (nextInput) {
+              nextInput.focus();
+            }
+          });
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        let npwpInput = document.getElementById("npwp");
+
+        document.querySelectorAll("tr[data-faktur]").forEach(row => {
+          row.addEventListener("click", function () {
+            let supplierName = this.getAttribute("data-supplier-name") || "";
+            let npwp = this.getAttribute("data-npwp") || "";
+            let kode = this.getAttribute("data-kode") || "";
+            let userCreate = this.getAttribute("data-usercreate") || "";
+            let dateCreate = this.getAttribute("data-datecreate") || "";
+            let userModified = this.getAttribute("data-usermodified") || "";
+            let dateModified = this.getAttribute("data-datemodified") || "";
+            let statusAp = this.getAttribute("data-status") || "";
+            let count = this.getAttribute("data-count") || "0";
+
+            // Tampilkan nama supplier
+            document.getElementById("supplier-name-display").innerHTML = `<strong>${supplierName}</strong>`;
+
+            // Pastikan NPWP selalu diperbarui sesuai row yang diklik setelah Cancel ditekan
+            if (!npwpInput.dataset.userEdited || npwpInput.dataset.userEdited === "false") {
+              npwpInput.value = npwp;
+            }
+
+            // Perbarui input lainnya
+            document.getElementById("total-external").value = formatNumber(count);
+            document.getElementById("kode").value = kode;
+            document.getElementById("user_create").value = userCreate;
+            document.getElementById("date_create").value = dateCreate;
+            document.getElementById("user_modified").value = userModified == 0 ? "-" : userModified;
+            document.getElementById("date_modified").value = dateModified;
+            document.getElementById("status-ap").value = statusAp;
+            document.getElementById("count").value = formatNumber(count);
+          });
+        });
+
+        // Tambahkan event listener untuk mendeteksi perubahan oleh user
+        npwpInput.addEventListener("input", function () {
+          this.dataset.userEdited = "true"; // Tandai bahwa user telah mengedit
+        });
+      });
+
+      function calculateTotal() {
+        let dpp = parseFloat($("#new-dpp").val().replace(/\./g, '').replace(',', '.')) || 0;
+        let ppn = parseFloat($("#new-ppn").val().replace(/\./g, '').replace(',', '.')) || 0;
+        let total = dpp + ppn;
+        $("#total-external").val(formatThousand(total.toString()));
+      }
+
+      $(document).on("input", "#new-dpp", function () {
+        let formattedValue = formatThousand($(this).val());
+        $(this).val(formattedValue);
+        let dppComputed = Math.round(parseFloat(formattedValue.replace(/\./g, '').replace(',', '.')) * 11 / 12);
+        $("#new-dppcomputed").val(formatThousand(dppComputed.toString()));
+        calculateTotal();
+
+        let ppn = Math.round(parseFloat(formattedValue.replace(/\./g, '').replace(',', '.')) * (11 / 100));
+        $("#new-ppn").val(formatThousand(ppn.toString()));
+        calculateTotal();
+      });
+
+      $(document).on("input", "#new-dppcomputed", function () {
+        let formattedValue = formatThousand($(this).val());
+        $(this).val(formattedValue);
+        let dpp = Math.round(parseFloat(formattedValue.replace(/\./g, '').replace(',', '.')) * 12 / 11);
+        $("#new-dpp").val(formatThousand(dpp.toString()));
+        calculateTotal();
+
+        let ppn = Math.round(parseFloat(formattedValue.replace(/\./g, '').replace(',', '.')) * (12 / 100));
+        $("#new-ppn").val(formatThousand(ppn.toString()));
+        calculateTotal();
+      });
+
+      $(document).on("input", "#new-ppn", function () {
+        let formattedValue = formatThousand($(this).val());
+        $(this).val(formattedValue);
+        calculateTotal();
       });
 
       let arrParams = <?php echo json_encode($arrParams); ?>;
